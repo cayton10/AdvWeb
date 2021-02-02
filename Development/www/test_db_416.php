@@ -24,7 +24,7 @@
 
 		
      	/* select all rows */ 
-     	$result = $mysqli->query("SELECT * FROM friends") or die($mysqli->error); 
+     	$result = $mysqli->query("SELECT * FROM friends"); 
 		 	 
      
 	echo "Affected rows by (SELECT): " . $mysqli->affected_rows . "<br />";

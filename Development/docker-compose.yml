@@ -59,7 +59,7 @@ services:
     networks:
       - backend
     environment:
-      PMA_HOST: dbServer
+      PMA_HOST: '${DATABASE_HOST_NAME}'
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
