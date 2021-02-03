@@ -27,9 +27,12 @@ services:
   node:
     build:
       context: "./bin/${NODE}"
-    container_name: 'nodejs'
+    container_name: "${NODE_JS_NAME}"
     ports:
       - "${HOST_MACHINE_NODE_PORT}:3000"
+    networks:
+      - frontend
+      - backend
     working_dir: /home/node/app
     environment:
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
