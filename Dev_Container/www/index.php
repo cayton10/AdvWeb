@@ -82,7 +82,9 @@
                                         $linkOutput .= "<li><a href='/Projects/" . $project . "'>" . $project . "</a></li>";
                                     }
 
-                                    echo $linkOutput
+                                    echo $linkOutput;
+
+                                    echo "<br/>" . $_ENV['REACT_PROJECT'];
                                     
                                     
                                 ?>

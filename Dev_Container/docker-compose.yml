@@ -38,7 +38,7 @@ services:
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./src/test416:/home/node/app
+      - ./src/${REACT_PROJECT_NAME}:/home/node/app
     command: bash -c "npm install && npm start"
   database:
     build:
