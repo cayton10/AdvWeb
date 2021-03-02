@@ -1,12 +1,19 @@
-# AdvWeb
+# Small React App (Using APIs)
 
-I've left the word_docs directory in the repo since it has the report for the docker build. I doubt you'll need to reference it, but it's there just in case. 
+### Install Issues:
 
-Let me know if you have any questions.
+There were some issues with getting [this theme](https://www.creative-tim.com/product/light-bootstrap-dashboard-react#) up and running. Multiple issues here. 
 
-## Book Work 
+- At the time of developing this docker box, this theme is not supported with Node.js Version 15.X
+- As a result this application uses Node.js Version 14.16.X
+- Within the docker-compose file we have to rebuild the Node-Sass dependencies on spinning up the container. 
 
-#### 2.18.2021
+```bash
+command: bash -c "npm install && npm rebuild node-sass && npm start "
+```
 
-Working through book examples to practice with arrow functions and concise function bodies. Basically just an overview of what we've already covered in class with the F1 team list example. Looking forward to getting into APIs
+So, as of <strong>3.1.2021</strong> the theme compiles and runs. Now it's time to gut the thing and build components / functions and make API calls.
+
+### APIs in Use:
+
 

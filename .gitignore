@@ -1,5 +1,4 @@
-
 .DS_Store
 
-Dev_Container/data
-Dev_Container/logs
+**/data
+**/logs
