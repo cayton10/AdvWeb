@@ -1,19 +1,14 @@
-# Small React App (Using APIs)
+# Advanced Web Programming
 
-### Install Issues:
+This is the remote repo for CIT 416: Advanced Web
 
-There were some issues with getting [this theme](https://www.creative-tim.com/product/light-bootstrap-dashboard-react#) up and running. Multiple issues here. 
+## Assignments:
 
-- At the time of developing this docker box, this theme is not supported with Node.js Version 15.X
-- As a result this application uses Node.js Version 14.16.X
-- Within the docker-compose file we have to rebuild the Node-Sass dependencies on spinning up the container. 
+### Docker Environment:
 
-```bash
-command: bash -c "npm install && npm rebuild node-sass && npm start "
-```
-
-So, as of <strong>3.1.2021</strong> the theme compiles and runs. Now it's time to gut the thing and build components / functions and make API calls.
-
-### APIs in Use:
+The final submission has changed slightly and I didn't keep track of versioning, but it has been improved with slight changes. Check directories / files and README.md [here](https://github.com/cayton10/AdvWeb/tree/main/Dev_Container).
 
 
+### Stocks / Weather / Comics (Axios Practice)
+
+README.md details how the project was built / how to replicate, etc. Access it [here](https://github.com/cayton10/AdvWeb/tree/main/weather_stocks_app).
