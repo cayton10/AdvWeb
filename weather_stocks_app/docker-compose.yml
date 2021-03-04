@@ -39,7 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./react/:/home/node/app
-    command: bash -c "npm install && npm rebuild node-sass && npm start "
+    command: bash -c "npm install && npm rebuild node-sass && npm start && npm install axios"
   database:
     build:
       context: "./bin/${DATABASE}"
