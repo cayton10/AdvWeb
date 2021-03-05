@@ -25,7 +25,7 @@ import {
 const STOCKS_API_KEY = '&apikey=2JQW3ZWVG48BXS4C';
 const STOCKS_PATH_BASE = 'https://www.alphavantage.co/query?';
 const STOCKS_FUNCTION = 'function=GLOBAL_QUOTE&symbol=';
-const tickers = ["AAPL", "AMZN", "MSFT"];
+const tickers = ["AAPL"];
 
 
 class Dashboard extends Component {
@@ -35,6 +35,7 @@ class Dashboard extends Component {
     this.state = {
       stockQueries: [],
       stocks: [],
+      stocksLoaded: false,
     }
   }
 
@@ -49,13 +50,14 @@ class Dashboard extends Component {
       axios(query).then(result => this.is_Mounted && tempStock.push(result.data))
     ))
 
-    this.setState({stocks: tempStock});
+    this.setState({stocks: tempStock}); //Whew. State is killing my brain
+    this.setState({stocksLoaded: true})
   }
 
   componentDidMount() {
     //When component mounts, fire the stock queries and load stocks array
     this.getStockInfo(this.stockQueries);
-
+    
     this.is_Mounted = true;
   }
 
@@ -65,14 +67,32 @@ class Dashboard extends Component {
   
   render() {
 
+    const {stocksLoaded} = this.state;
+    const {stocks} = this.state;
+
   return (
       <>
         <Container fluid>
           <Row>
+            
             <Col lg="3" sm="6">
               <Card className="card-stats">
                 <Card.Body>
-                  {console.log(this.state.stocks)}
+                  {
+                    stocksLoaded
+                    ?
+                    //console.log(stocks[0]["Global Quote"]["01. symbol"]) <- Cannot read "Global Quote" of undefined
+                    console.log(stocks)
+                    :
+                    null
+                  }
+                  {
+                    stocksLoaded
+                    ?
+                    <Stocks stocksFromParent = {stocks} />
+                    :
+                    null
+                  }
                   <Row>
                     <Col xs="5">
                       <div className="icon-big text-center icon-warning">
@@ -256,34 +276,11 @@ class Dashboard extends Component {
   }
 }
 
-const Stocks = ({props}) => (
+const Stocks = ({stocksFromParent}) => (
+  <div>
+    TEST
+  </div>
 
-    <Col lg="3" sm="6">
-      <Card className="card-stats">
-        <Card.Body>
-          <Row>
-            <Col xs="5">
-              <div className="icon-big text-center icon-warning">
-                <i className="nc-icon nc-chart text-warning"></i>
-              </div>
-            </Col>
-            <Col xs="7">
-              <div className="numbers">
-                <p className="card-category">Number</p>
-                <Card.Title as="h4">150GB</Card.Title>
-              </div>
-            </Col>
-          </Row>
-        </Card.Body>
-        <Card.Footer>
-          <hr></hr>
-          <div className="stats">
-            <i className="fas fa-redo mr-1"></i>
-            Update Now
-          </div>
-        </Card.Footer>
-      </Card>
-    </Col>
-  );
+);
 
 export default Dashboard;
