@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { Component } from "react";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -16,11 +17,68 @@ import {
   Tooltip,
 } from "react-bootstrap";
 
-function Dashboard() {
+
+//API Query constants
+const STOCKS_API_KEY = '&apikey=2JQW3ZWVG48BXS4C';
+const PATH_BASE = 'https://www.alphavantage.co/query?';
+const FUNCTION = 'function=GLOBAL_QUOTE&symbol=';
+const tickers = ["AAPL", "AMZN", "MSFT"];
+
+
+class Dashboard extends Component {
+
+  //Need our constructor
+  constructor(props){
+    super(props);
+
+    this.state = {
+      url: [], //Holds all the query strings required to return from API
+    }
+
+    //Bind functions to component
+    this.fetchStocks = this.fetchStocks.bind(this);
+    this.loadQuery = this.loadQuery.bind(this);
+  }
+
+  /**
+   * loadQuery(array):
+   * Accepts a state variable array and completes the appropriate query string before calling
+   * next function
+   */
+  loadQuery(abbr) {
+    url.setState = abbr.map( item => `${PATH_BASE}${FUNCTION}${item}${STOCKS_API_KEY}`);
+  }
+
+
+  //Grab stock info
+  fetchStocks(searchTerm){
+    axios(searchTerm).then(result => this.is_Mounted && console.log(result.data));
+  }
+
+  //Did mount / will unmount
+  componentDidMount() {
+    const searchTerm = this.state;
+    this.fetchStocks(searchTerm);
+    this.loadQuery(tickers);
+
+    this.is_Mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.is_Mounted = false;
+  }
+  
+  render() {
+
   return (
     <>
       <Container fluid>
         <Row>
+          <div>
+            <ul>{this.state.url.map(item => (<li key={item}>{item}</li>))}
+            </ul>
+          </div>
+
           <Col lg="3" sm="6">
             <Card className="card-stats">
               <Card.Body>
@@ -635,6 +693,7 @@ function Dashboard() {
       </Container>
     </>
   );
+}
 }
 
 export default Dashboard;
