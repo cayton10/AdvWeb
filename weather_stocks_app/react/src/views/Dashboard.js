@@ -25,7 +25,7 @@ import {
 const STOCKS_API_KEY = '&apikey=2JQW3ZWVG48BXS4C';
 const STOCKS_PATH_BASE = 'https://www.alphavantage.co/query?';
 const STOCKS_FUNCTION = 'function=GLOBAL_QUOTE&symbol=';
-const tickers = ["AAPL"];
+const tickers = ["MSFT"];
 
 
 class Dashboard extends Component {
@@ -39,19 +39,23 @@ class Dashboard extends Component {
     }
   }
 
-  //Auto load up the stock queries
+  //Auto load the stock queries
   stockQueries = tickers.map( item => `${STOCKS_PATH_BASE}${STOCKS_FUNCTION}${item}${STOCKS_API_KEY}`); 
 
   getStockInfo(stockQueries) {
 
-    //Temporary array used to set state of 'stocks' state array
-    const tempStock = [];
     stockQueries.map(query => (
-      axios(query).then(result => this.is_Mounted && tempStock.push(result.data))
+      axios(query)
+        .then(result => this.is_Mounted && this.setStocks(result.data))
     ))
+  }
 
-    this.setState({stocks: tempStock}); //Whew. State is killing my brain
-    this.setState({stocksLoaded: true})
+  //Set state of stocks array
+  setStocks(stock) {
+    this.setState({
+      stocks: this.state.stocks.concat(stock),
+      stocksLoaded: true
+    }); //Concat operator for appending stock to state array
   }
 
   componentDidMount() {
@@ -74,126 +78,19 @@ class Dashboard extends Component {
       <>
         <Container fluid>
           <Row>
+            {
+              stocksLoaded ?
+              console.log(stocks)
+              : null
+            }
             
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  {
-                    stocksLoaded
-                    ?
-                    //console.log(stocks[0]["Global Quote"]["01. symbol"]) <- Cannot read "Global Quote" of undefined
-                    console.log(stocks)
-                    :
-                    null
-                  }
-                  {
-                    stocksLoaded
-                    ?
-                    <Stocks stocksFromParent = {stocks} />
-                    :
-                    null
-                  }
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-chart text-warning"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Number</p>
-                        <Card.Title as="h4">150GB</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="fas fa-redo mr-1"></i>
-                    Update Now
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-light-3 text-success"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Revenue</p>
-                        <Card.Title as="h4">$ 1,345</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="far fa-calendar-alt mr-1"></i>
-                    Last day
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-vector text-danger"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Errors</p>
-                        <Card.Title as="h4">23</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="far fa-clock-o mr-1"></i>
-                    In the last hour
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
-            <Col lg="3" sm="6">
-              <Card className="card-stats">
-                <Card.Body>
-                  <Row>
-                    <Col xs="5">
-                      <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-favourite-28 text-primary"></i>
-                      </div>
-                    </Col>
-                    <Col xs="7">
-                      <div className="numbers">
-                        <p className="card-category">Followers</p>
-                        <Card.Title as="h4">+45K</Card.Title>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card.Body>
-                <Card.Footer>
-                  <hr></hr>
-                  <div className="stats">
-                    <i className="fas fa-redo mr-1"></i>
-                    Update now
-                  </div>
-                </Card.Footer>
-              </Card>
-            </Col>
+            {
+              //set up conditional (only 5 queries/min from API)
+              stocksLoaded ?
+              <Stocks stocksFromParent={stocks} />
+              : null
+            }
+                      
           </Row>
           <Row>
             <Col sm="12">
@@ -277,9 +174,103 @@ class Dashboard extends Component {
 }
 
 const Stocks = ({stocksFromParent}) => (
-  <div>
-    TEST
-  </div>
+
+stocksFromParent.map( stock => {
+  const s = stock['Global Quote'];
+  const currentPrice = parseFloat(s['05. price']);
+  const previousClose = parseFloat(s['08. previous close']);
+  const percentChange = parseFloat(s['10. change percent']).toFixed(2);
+  let format = '';
+  //Conditional formatting for percentage
+  if(percentChange < 0)
+  {
+    format = "negative";
+  }
+  else
+  {
+    format = "positive";
+  }
+
+  return(
+  <Col xl="4" lg="6" md="6" sm="6" key={s['01. symbol']}>
+    <Card className="card-stats">
+      <Card.Body>
+        <Row>
+          <Col xs="5">
+            <div className="icon-big text-center icon-warning">
+              <img className="stockImage" src={`../${s['01. symbol']}.svg`}/>
+            </div>
+          </Col>
+          <Col xs="7" className="tickerInfo">
+            <div className="numbers">
+              <p className="card-category symbolText">SYMBOL</p>
+              <Card.Title as="h4">{s['01. symbol']}</Card.Title>
+            </div>
+          </Col>
+          <Col>
+            <div className="statistics">
+              <Row className="firstRow">
+                <Col sm="6">
+                  <div className="stockParam">
+                    <p className="card-category">Last Trading Day:</p>
+                  </div>
+                </Col>
+                <Col sm="6">
+                  <div className="paramInfo">
+                    <span className="paramData">{s['07. latest trading day']}</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="6">
+                  <div className="stockParam">
+                    <p className="card-category">Current Price:</p>
+                  </div>
+                </Col>
+                <Col sm="6">
+                  <div className="paramInfo">
+                    <span className="paramData">${currentPrice}</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="6">
+                  <div className="stockParam">
+                    <p className="card-category">Previous Close:</p>
+                  </div>
+                </Col>
+                <Col sm="6">
+                  <div className="paramInfo">
+                    <span className="paramData">${previousClose}</span>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="6">
+                  <div className="stockParam">
+                    <p className="card-category">Percent Change:</p>
+                  </div>
+                </Col>
+                <Col sm="6">
+                  <div className="paramInfo">
+                    <span className={format}>%{percentChange}</span>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+      </Card.Body>
+      <Card.Footer>
+        <hr></hr>
+        <div className="stats">
+          <i className="fas fa-redo mr-1"></i>
+        </div>
+      </Card.Footer>
+    </Card>
+  </Col>
+)})
+  
 
 );
 

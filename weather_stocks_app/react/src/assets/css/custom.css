@@ -1,0 +1,31 @@
+
+
+/* style date span for stock cards */
+.firstRow{
+    padding-top: 1rem;
+}
+
+.negative{
+    color: red;
+}
+
+.positive{
+    color: green
+}
+
+.stockImage {
+    max-width: 100%;
+}
+
+.tickerInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.symbol-text {
+    font-size: 2rem !important;
+}
+.card-title {
+    font-size: 2rem;
+}
