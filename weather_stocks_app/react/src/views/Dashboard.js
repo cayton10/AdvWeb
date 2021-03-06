@@ -22,10 +22,18 @@ import {
 /*                             API QUERY CONSTANTS                            */
 /* -------------------------------------------------------------------------- */
 
+/* --------------------------------- STOCKS --------------------------------- */
 const STOCKS_API_KEY = '&apikey=2JQW3ZWVG48BXS4C';
 const STOCKS_PATH_BASE = 'https://www.alphavantage.co/query?';
 const STOCKS_FUNCTION = 'function=GLOBAL_QUOTE&symbol=';
-const tickers = ["MSFT"];
+//const tickers = ["AAPL", "AMZN", "MSFT"];
+const tickers = ["AAPL"];
+
+/* --------------------------------- WEATHER -------------------------------- */
+const WEATHER_API_KEY = 'bd1f6f876baf2ee1284c249612206fe3';
+const WEATHER_PATH_BASE = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+const WEATHER_ZIP_CODE = '25705,';
+const WEATHER_COUNTRY_CODE = 'us';
 
 
 class Dashboard extends Component {
@@ -36,11 +44,16 @@ class Dashboard extends Component {
       stockQueries: [],
       stocks: [],
       stocksLoaded: false,
+      weatherQuery: null,
+      weather: [],
+      weatherLoaded: false,
     }
   }
 
+/* ----------------------------- STOCK FUNCTIONS ---------------------------- */
+
   //Auto load the stock queries
-  stockQueries = tickers.map( item => `${STOCKS_PATH_BASE}${STOCKS_FUNCTION}${item}${STOCKS_API_KEY}`); 
+  stockQueries = tickers.map( item => `${STOCKS_PATH_BASE}${STOCKS_FUNCTION}${item}${STOCKS_API_KEY}`);
 
   getStockInfo(stockQueries) {
 
@@ -58,9 +71,30 @@ class Dashboard extends Component {
     }); //Concat operator for appending stock to state array
   }
 
+/* ---------------------------- WEATHER FUNCTIONS --------------------------- */
+
+  //Auto construct weather query
+  weatherQuery = `${WEATHER_PATH_BASE}${WEATHER_ZIP_CODE}${WEATHER_COUNTRY_CODE}&appid=${WEATHER_API_KEY}`;
+
+  getWeatherInfo(weatherQuery) {
+    axios(weatherQuery)
+      .then(result => this.is_Mounted && this.setWeather(result.data))
+  }
+
+  //Set weather state array variable
+  setWeather(weather) {
+    this.setState({
+      weather: {weather},
+      weatherLoaded: true
+    });
+  }
+
+
+
   componentDidMount() {
     //When component mounts, fire the stock queries and load stocks array
     this.getStockInfo(this.stockQueries);
+    this.getWeatherInfo(this.weatherQuery);
     
     this.is_Mounted = true;
   }
@@ -73,17 +107,13 @@ class Dashboard extends Component {
 
     const {stocksLoaded} = this.state;
     const {stocks} = this.state;
+    const {weatherLoaded} = this.state;
+    const {weather} = this.state;
 
   return (
       <>
         <Container fluid>
           <Row>
-            {
-              stocksLoaded ?
-              console.log(stocks)
-              : null
-            }
-            
             {
               //set up conditional (only 5 queries/min from API)
               stocksLoaded ?
@@ -95,6 +125,11 @@ class Dashboard extends Component {
           <Row>
             <Col sm="12">
               <Card>
+                {
+                  weatherLoaded ?
+                  console.log(weather)
+                  : null
+                }
                 <Card.Header>
                   <Card.Title as="h4">Users Behavior</Card.Title>
                   <p className="card-category">24 Hours performance</p>
@@ -197,7 +232,7 @@ stocksFromParent.map( stock => {
       <Card.Body>
         <Row>
           <Col xs="5">
-            <div className="icon-big text-center icon-warning">
+            <div className="icon-big text-center icon-warning ticker-img-div">
               <img className="stockImage" src={`../${s['01. symbol']}.svg`}/>
             </div>
           </Col>
@@ -224,7 +259,7 @@ stocksFromParent.map( stock => {
               <Row>
                 <Col sm="6">
                   <div className="stockParam">
-                    <p className="card-category">Current Price:</p>
+                    <p className="card-category">Closing Price:</p>
                   </div>
                 </Col>
                 <Col sm="6">

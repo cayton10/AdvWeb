@@ -13,8 +13,13 @@
     color: green
 }
 
+.ticker-img-div{
+    display: flex;
+}
+
 .stockImage {
-    max-width: 100%;
+    max-width: 75%;
+    max-height: 75%;
 }
 
 .tickerInfo {

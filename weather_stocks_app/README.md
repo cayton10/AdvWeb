@@ -24,6 +24,12 @@ So, as of <strong>3.1.2021</strong> the theme compiles and runs. Now it's time t
 
 ### Stocks Component
 
+#### <strong>Notice</strong>
+
+If not all stocks are displayed, it's because I forgot to uncomment the const tickers array which contains the abbreviations for each IPO. The Alpha Vantage API limits queries to 5 / minute and 500 / day. During development of this application, I had to do a lot of page reloading to test, so I didn't want to max out my allowance.
+
+### Weather Component
+
 
 
 ## APIs in Use:
