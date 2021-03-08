@@ -34,3 +34,31 @@
 .card-title {
     font-size: 2rem;
 }
+
+.weatherIcon {
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.imageRow {
+    display: flex;
+}
+
+.funky{
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+}
+
+.weatherData {
+    color: black;
+    font-size: 1rem;
+}
+
+.weatherDatField {
+    padding: 0;
+    max-height: 1.25rem;
+}
+
+.weatherRow {
+    margin: 0;
+}
