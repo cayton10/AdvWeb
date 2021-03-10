@@ -41,6 +41,10 @@ Weather functions as it should. After having worked with React for a couple of d
 I'm recycling a lot of elements / repeating a lot of HTML structure, where I could just make a component to output each data row for me instead of cluttering everything up. 
 
 
+### Comics Component
+
+We've discovered that the server settings for the comic strip API has CORS restrictions. Therefore, querying the api and presenting the information on a "localhost" environment won't work. When I can revisit this, I will, but at the moment, it's midterm and I'm out of time. My plan for a fix is to open security settings to get around the CORS issue, finish the comic functions, build / publish the app, and then port it to my Netlify account.
+
 ## APIs in Use:
 
 - Current weather information (use openweathermap APIs to display temp, forecast and city information (Huntington))

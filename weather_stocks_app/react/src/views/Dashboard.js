@@ -1,20 +1,13 @@
 import axios from "axios";
 import React, { Component } from "react";
-import ChartistGraph from "react-chartist";
+
 // react-bootstrap components
 import {
-  Badge,
-  Button,
   Card,
-  Navbar,
-  Nav,
-  Table,
   Container,
   Row,
   Col,
   Form,
-  OverlayTrigger,
-  Tooltip,
 } from "react-bootstrap";
 
 
@@ -27,7 +20,6 @@ const STOCKS_API_KEY = '&apikey=2JQW3ZWVG48BXS4C';
 const STOCKS_PATH_BASE = 'https://www.alphavantage.co/query?';
 const STOCKS_FUNCTION = 'function=GLOBAL_QUOTE&symbol=';
 const tickers = ["AAPL", "AMZN", "MSFT"];
-//const tickers = ["AAPL"];
 
 /* --------------------------------- WEATHER -------------------------------- */
 const WEATHER_API_KEY = 'bd1f6f876baf2ee1284c249612206fe3';
@@ -36,8 +28,9 @@ const WEATHER_ZIP_CODE = '25705,';
 const WEATHER_COUNTRY_CODE = 'us';
 const WEATHER_UNITS = 'imperial';
 
-/* --------------------------------- COMICS --------------------------------- */
-
+/* ---------------------------------- COMIC --------------------------------- */
+const COMIC_PATH_BASE = 'https://xkcd.com/';
+const COMIC_PATH_END = '/info.0.json';
 
 
 class Dashboard extends Component {
@@ -51,6 +44,8 @@ class Dashboard extends Component {
       weatherQuery: null,
       weather: [],
       weatherLoaded: false,
+      comics: [],
+      comicsLoaded: false,
     }
   }
 
@@ -93,13 +88,59 @@ class Dashboard extends Component {
     });
   }
 
+/* ----------------------------- COMIC FUNCTIONS ---------------------------- */
+
+  //Generate 5 unique, random comic tags between 1-200
+  setComicQueries() {
+
+    let nums = [];
+    let queries = [];
+
+    while(nums.length < 5)
+    {
+      let rand = Math.floor(Math.random() * 100) + 1;
+
+      if(nums.indexOf(rand) === -1)
+        nums.push(rand);
+    }
+
+    //Now construct queries
+    for(var i = 0; i < nums.length; ++i) {
+      var query = `${COMIC_PATH_BASE}${nums[i]}${COMIC_PATH_END}`
+
+      queries.push(query);
+    }
 
 
+    this.getComics(queries);
+
+  }
+
+  getComics(comicQuery) {
+    console.log(comicQuery);
+    /*comicQuery.map(query => (
+      axios(query)
+        .then(result => this.setComics(result.data) && console.log(query))
+    ))*/
+  }
+
+  setComics(comic) {
+    this.setState({
+      comics: this.state.comics.concat(comic),
+      comicsLoaded: true,
+    });
+  }
+  
+  
   componentDidMount() {
     //When component mounts, fire the stock queries and load stocks array
     this.getStockInfo(this.stockQueries);
+    //Fire weather info and load weather
     this.getWeatherInfo(this.weatherQuery);
-    
+    //Generate comic queries
+    this.setComicQueries();
+
+
     this.is_Mounted = true;
   }
 
@@ -114,6 +155,8 @@ class Dashboard extends Component {
     const {stocks} = this.state;
     const {weatherLoaded} = this.state;
     const {weather} = this.state;
+    const {comicsLoaded} = this.state;
+    const {comics} = this.state;
 
   return (
       <>
@@ -130,25 +173,41 @@ class Dashboard extends Component {
           <Row>
           {
             weatherLoaded ?
-            console.log(weather)
-            : null
-          }
-          {
-            weatherLoaded ?
             <Weather weatherFromParent={weather.weather} />
             :null
           }
+          <Col sm="6">
+            <Row>
+              {
+                comicsLoaded ?
+                console.log(comics)
+                : null
+              }
+              <Form>
+                <Form.Label>Pick a Comic</Form.Label>
+                <Form.Control as='select' custom>
+                  <option>1</option>
+                </Form.Control>
+              </Form>
+            </Row>
+          </Col>
           </Row>
+
         </Container>
       </>
     );
   }
 }
 
+const Comic = ({path}) => {
+
+  
+}
+
 
 const Weather = ({weatherFromParent}) => {
   
-  //Shorthand properties
+  //alias properties
   const w = weatherFromParent;
   const city = w.name;
   const weatherType = w.weather[0].main;
@@ -164,14 +223,9 @@ const Weather = ({weatherFromParent}) => {
   //URL for current weather icon
   const icon = `http://openweathermap.org/img/wn/${w.weather[0].icon}@2x.png`;
 
-
-
-
-
-
 return(
   
-  <Col sm="12">
+  <Col sm="6">
     <Card>
       <Card.Header>
         <Card.Title as="h4">Weather in {city}</Card.Title>
