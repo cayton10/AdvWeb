@@ -17,4 +17,4 @@ README.md details how the project was built / how to replicate, etc. Access it [
 ### Database Designs
 
 #### 3.11.2021
-Database ERD for the semester project [CSG+] added to repo.
+Database ERD for the semester project [CSG+](https://github.com/cayton10/AdvWeb/blob/main/Databases/CSG%2B/ERD/csg%2Berd.pdf) added to repo.
