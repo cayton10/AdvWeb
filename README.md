@@ -12,3 +12,9 @@ The final submission has changed slightly and I didn't keep track of versioning,
 ### Stocks / Weather / Comics (Axios Practice)
 
 README.md details how the project was built / how to replicate, etc. Access it [here](https://github.com/cayton10/AdvWeb/tree/main/weather_stocks_app).
+
+
+### Database Designs
+
+#### 3.11.2021
+Database ERD for the semester project [CSG+] added to repo.
