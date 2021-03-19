@@ -19,10 +19,13 @@ Use [this](https://phase2.github.io/devtools/common-tasks/ssh-into-a-container/)
 ```bash
 npm install --save {packageName}
 ``` 
-By using the --save flag, we'll add the package to our package.json dependency file and reduce spin up time with docker-compose after the initial image has been built
+By using the --save flag, we'll add the package to our package.json dependency file and reduce spin up time with docker-compose after the initial image has been built.
 
 ## Routing
 We also need to use routing for this project and in order to do so, we need react routing capabilities. The following command is included in the docker-compose.yaml file
 ```bash
 npm install --save react-router-dom 
 ```
+
+## Components
+Base components built for the theme generally just output the HTML required to give the site structure. These components are also the primary components used for routing between each required 'page' on CSG+.
