@@ -57,7 +57,7 @@
                                 <li><a href="/test_db.php">Test DB Connection with mysqli</a></li>
                                 <li><a href="/test_db_pdo.php">Test DB Connection with PDO</a></li>
                                 <li><a href="/test_db_416.php">Test DB: Brian's Code</a></li>
-                                <li><a href="http://localhost:3000">Test React Project</a></li>
+                                <li><a href="http://localhost:3000">CSG+ React Env</a></li>
                             </ul>
                         </div>
                     </div>

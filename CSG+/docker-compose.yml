@@ -38,8 +38,8 @@ services:
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./react:/home/node/app
-    command: bash -c "npm install && npm start"
+      - ./csg/:/home/node/app
+    command: bash -c "npm install bootstrap --save && npm install axios --save && npm install && npm start"
   database:
     build:
       context: "./bin/${DATABASE}"
