@@ -39,7 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./csg/:/home/node/app
-    command: bash -c "npm install bootstrap --save && npm install axios --save && npm install && npm start"
+    command: bash -c "npm install && npm start"
   database:
     build:
       context: "./bin/${DATABASE}"
