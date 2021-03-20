@@ -24,7 +24,7 @@ class App extends Component {
               <img id='csgNavLogo' src='csgLogo.svg' alt='CSG logo'/> 
             </div>
           </div>
-          <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+          <nav className='navbar navbar-expand-lg navbar-dark bg-dark' id='headerNav'>
             <div className='navbar-collapse' id='navbarSupportContent'>
               <ul className='navbar-nav'>
                 <li className='nav-item'>

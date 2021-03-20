@@ -9,6 +9,10 @@
   background-color: #EDEDED;
 }
 
+.pageFunctionTitle {
+  margin-top: 1rem;
+}
+
 #appTitle{
   margin:auto;
   position: relative;
@@ -43,6 +47,14 @@ footer {
 
 #footInfo{
   justify-self: center;
+}
+
+#headerNav{
+  font-size: 1.25rem;
+}
+
+#footerNav {
+  font-size: 1rem;
 }
 
 #builtWith {

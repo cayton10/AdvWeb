@@ -7,5 +7,6 @@ import Admin from './Admin';
 import Login from './Login';
 import Register from './Register';
 import Footer from './Footer';
+import ClassDetail from './ClassDetail';
 
-export {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Home, Footer};
+export {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Home, Footer, ClassDetail};

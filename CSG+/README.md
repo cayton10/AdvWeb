@@ -26,6 +26,8 @@ We also need to use routing for this project and in order to do so, we need reac
 ```bash
 npm install --save react-router-dom 
 ```
+### Course Detail Routing
+Going to need to go into more detail on how to correctly route the content for this from the table view of course offerings. I can't figure out where I'm going wrong with it. Tried <Redirect> but that didn't work.
 
 ## Components
 Base components built for the theme generally just output the HTML required to give the site structure. These components are also the primary components used for routing between each required 'page' on CSG+.
@@ -35,3 +37,29 @@ The app component is the one that comes together the easiest, since this compone
 
 ### Footer
 The footer component was built as a functional stateless component simply for ease. I initially just left this in the App.js component as a function outside of the component rendering, but I decided to move it because, ya know... good coding practice.
+
+### AddClassInfo
+Simple form layout for adding classes. Used bootstrap examples and ported them into the component
+
+### Admin
+Unsure about what's supposed to be visible by the admin here. Will have to follow up with class questions
+
+### ClassDetail
+I'm getting lost in the routing for this and starting to get the feeling I'm approaching it incorrectly.
+
+### Home
+Place holder images and text for the eventual home page, which will be comprised of stock academic images and some text about what CSG is for, how to use, etc.
+
+### ListOfCourses
+Ported a bootstrap table from [getbootstrap.com](https://getbootstrap.com/docs/4.0/content/tables/) and tailored to fit the project description.
+
+### Login
+Simple form layout for loggin in a user. Takes field parameters, email and password
+
+### Register
+Similar to above.
+
+### Schedule Review
+Similar to ListOfCourses component albiet with more detail. I'll also have to figure out routing for displaying the syllabi.
+
+

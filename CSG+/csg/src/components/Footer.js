@@ -10,7 +10,7 @@ const Footer = () => {
       <>
       <footer className='footer navbar-static-bottom'>
         <div className="container">
-          <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+          <nav className='navbar navbar-expand-lg navbar-dark bg-dark footerNav'>
             <div className='navbar-collapse' id='navbarSupportContent'>
               <ul className='navbar-nav'>
                 <li className='nav-item'>
