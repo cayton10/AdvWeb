@@ -33,11 +33,49 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
+footer {
+
+  position:relative;
+  bottom:0;
+  width: 100%;
+}
+
+
+#footInfo{
+  justify-self: center;
+}
+
+#builtWith {
+
+  align-items: center;
+}
+
+#builtWithP {
+  margin: 0;
+}
+
+#reactPNG {
+  height: 50px;
+  width: 50px;
+}
+
+#mainContent {
+  min-height: 70vw;
+  min-height: -webkit-calc(100% - 186PX);
+  min-height: -moz-calc(100% -186px);
+  min-height: calc(100% - 186px);
+}
+
+.placeHolder {
+  max-width: 100%;
+  object-fit: fill;
+}
+
+/*@media (prefers-reduced-motion: no-preference) {
+  #csgNavLogo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+}*/
 
 .App-header {
   background-color: #282c34;
@@ -62,3 +100,6 @@
     transform: rotate(360deg);
   }
 }
+
+
+

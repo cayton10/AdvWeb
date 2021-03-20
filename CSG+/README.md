@@ -29,3 +29,9 @@ npm install --save react-router-dom
 
 ## Components
 Base components built for the theme generally just output the HTML required to give the site structure. These components are also the primary components used for routing between each required 'page' on CSG+.
+
+### App
+The app component is the one that comes together the easiest, since this component is essentially where everything gets linked. The only rendering that needs done outside of all of the <Route>'s generated are for place holders (text boxes, imgs, etc).
+
+### Footer
+The footer component was built as a functional stateless component simply for ease. I initially just left this in the App.js component as a function outside of the component rendering, but I decided to move it because, ya know... good coding practice.
