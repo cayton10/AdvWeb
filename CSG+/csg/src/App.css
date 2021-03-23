@@ -37,14 +37,6 @@
   pointer-events: none;
 }
 
-footer {
-
-  position:relative;
-  bottom:0;
-  width: 100%;
-}
-
-
 #footInfo{
   justify-self: center;
 }
@@ -71,12 +63,6 @@ footer {
   width: 50px;
 }
 
-#mainContent {
-  min-height: 70vw;
-  min-height: -webkit-calc(100% - 186PX);
-  min-height: -moz-calc(100% -186px);
-  min-height: calc(100% - 186px);
-}
 
 .placeHolder {
   max-width: 100%;
@@ -111,6 +97,17 @@ footer {
   to {
     transform: rotate(360deg);
   }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 100%;
+
 }
 
 

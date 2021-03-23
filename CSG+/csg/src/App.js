@@ -77,6 +77,7 @@ class App extends Component {
             <Route exact path="/Projects/CSG/register" component={Register}></Route>
           </Switch>
         </div>
+        <div className="push"></div>
         <Footer />
       </Router>
       </BrowserRouter>
