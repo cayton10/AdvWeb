@@ -12,7 +12,7 @@ export default class Register extends Component {
                 <form id="registrationForm" className='my-5'>
                     <div className='row'>
                         <div className="form-group col-md-12" >
-                            <label for="registerEmail">User Email</label>
+                            <label htmlFor="registerEmail">User Email</label>
                             <input type="email" className="form-control" id="registerEmail" placeholder="Ex: student@marshall.live.edu" />
 
                         </div>
@@ -20,22 +20,22 @@ export default class Register extends Component {
                     
                     <div className='row'>
                         <div className="form-group col-md-6 col-lg-6" >
-                            <label for="registerFirst">First Name</label>
+                            <label htmlFor="registerFirst">First Name</label>
                             <input type="text" className="form-control" id="registerFirst" placeholder="Ex: Peter" />
                         </div>
                         <div className="form-group col-md-6 col-lg-6" >
-                            <label for="registerLast">Course Number</label>
+                            <label htmlFor="registerLast">Course Number</label>
                             <input type="text" className="form-control" id="registerLast" placeholder="Ex: Parker" />
                         </div>
                     </div>
 
                     <div className='row'>
                         <div className="form-group col-md-6 col-lg-6" >
-                            <label for="registerPW">Password</label>
+                            <label htmlFor="registerPW">Password</label>
                             <input type="password" className="form-control" id="registerPW" placeholder="Password" />
                         </div>
                         <div className="form-group col-md-6 col-lg-6" >
-                            <label for="registerConfirmPW">Confirm Password</label>
+                            <label htmlFor="registerConfirmPW">Confirm Password</label>
                             <input type="password" className="form-control" id="registerConfirmPW" placeholder="Password" />
                         </div>
                     </div>

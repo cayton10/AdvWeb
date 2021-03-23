@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
 import logo from './logo.svg';
 import './App.css';
+//Subdirectory path constant
+const subdirPath = "/Projects/CSG"
 
 class App extends Component {
 
@@ -14,6 +16,7 @@ class App extends Component {
 
   render() {
     return (
+
       <Router>
         <div className='container'>
           <div id='titleBar' className='align-items-center justify-content-around mb-3'>
@@ -66,7 +69,7 @@ class App extends Component {
             </div>
           </nav>
           <Switch>
-            <Route exact path='/' component={Home}></Route>
+            <Route exact path="/" component={Home}></Route>
             <Route exact path="/schedule" component={ScheduleReview}></Route>
             <Route exact path="/courses" component={ListOfCourses}></Route>
             <Route exact path="/add" component={AddClassInfo}></Route>
@@ -75,9 +78,9 @@ class App extends Component {
             <Route exact path="/register" component={Register}></Route>
           </Switch>
         </div>
+        <div className="push"></div>
         <Footer />
       </Router>
-
     );
   }
 }

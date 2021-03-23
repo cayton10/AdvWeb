@@ -26,6 +26,14 @@ We also need to use routing for this project and in order to do so, we need reac
 ```bash
 npm install --save react-router-dom 
 ```
+
+### Routing with Subdirectories
+Since this docker container is meant to act as a "portable repo", as well as a tool for development and production testing, it's necessary to be able to keep writing applications while also deploying them to a production environment. In order to have it both ways without having to specify paths for routing, the "homepage" variable in the project package.json to:
+```JSON
+homepage: "."
+```
+in essence this tells the final build to reference whatever path the project is stored in as the root.
+
 ### Course Detail Routing
 Going to need to go into more detail on how to correctly route the content for this from the table view of course offerings. I can't figure out where I'm going wrong with it. Tried <Redirect> but that didn't work.
 
