@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/Projects/CSG/static/css/main.9cc89f0e.chunk.css",
+    "main.js": "/Projects/CSG/static/js/main.b92c1cbb.chunk.js",
+    "main.js.map": "/Projects/CSG/static/js/main.b92c1cbb.chunk.js.map",
+    "runtime-main.js": "/Projects/CSG/static/js/runtime-main.547132e0.js",
+    "runtime-main.js.map": "/Projects/CSG/static/js/runtime-main.547132e0.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/Projects/CSG/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.b9269dee.chunk.js": "/Projects/CSG/static/js/2.b9269dee.chunk.js",
+    "static/js/2.b9269dee.chunk.js.map": "/Projects/CSG/static/js/2.b9269dee.chunk.js.map",
+    "static/js/3.43df352b.chunk.js": "/Projects/CSG/static/js/3.43df352b.chunk.js",
+    "static/js/3.43df352b.chunk.js.map": "/Projects/CSG/static/js/3.43df352b.chunk.js.map",
+    "index.html": "/Projects/CSG/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/Projects/CSG/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.9cc89f0e.chunk.css.map": "/Projects/CSG/static/css/main.9cc89f0e.chunk.css.map",
+    "static/js/2.b9269dee.chunk.js.LICENSE.txt": "/Projects/CSG/static/js/2.b9269dee.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/Projects/CSG/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.547132e0.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.b9269dee.chunk.js",
+    "static/css/main.9cc89f0e.chunk.css",
+    "static/js/main.b92c1cbb.chunk.js"
+  ]
+}

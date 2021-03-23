@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
 import logo from './logo.svg';
 import './App.css';
@@ -14,6 +14,8 @@ class App extends Component {
 
   render() {
     return (
+      <BrowserRouter
+        basename="/Projects/CSG">
       <Router>
         <div className='container'>
           <div id='titleBar' className='align-items-center justify-content-around mb-3'>
@@ -28,37 +30,37 @@ class App extends Component {
             <div className='navbar-collapse' id='navbarSupportContent'>
               <ul className='navbar-nav'>
                 <li className='nav-item'>
-                  <Link to={"/"} className='nav-link'>
+                  <Link to={"/Projects/CSG/"} className='nav-link'>
                     Home
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to={"/schedule"} className='nav-link'>
+                  <Link to={"/Projects/CSG/schedule"} className='nav-link'>
                     Schedule
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to={"/courses"} className='nav-link'>
+                  <Link to={"/Projects/CSG/courses"} className='nav-link'>
                     Courses
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to={"/add"} className='nav-link'>
+                  <Link to={"/Projects/CSG/add"} className='nav-link'>
                     Add Info
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to={"/login"} className='nav-link'>
+                  <Link to={"/Projects/CSG/login"} className='nav-link'>
                     Login
                   </Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to={"/register"} className='nav-link'>
+                  <Link to={"/Projects/CSG/register"} className='nav-link'>
                     Register
                   </Link>
                 </li>
                 <li className='nav-item pull-right'>
-                  <Link to={"/admin"} className='nav-link'>
+                  <Link to={"/Projects/CSG/admin"} className='nav-link'>
                     Admin
                   </Link>
                 </li>
@@ -66,17 +68,18 @@ class App extends Component {
             </div>
           </nav>
           <Switch>
-            <Route exact path='/' component={Home}></Route>
-            <Route exact path="/schedule" component={ScheduleReview}></Route>
-            <Route exact path="/courses" component={ListOfCourses}></Route>
-            <Route exact path="/add" component={AddClassInfo}></Route>
-            <Route exact path="/admin" component={Admin}></Route>
-            <Route exact path="/login" component={Login}></Route>
-            <Route exact path="/register" component={Register}></Route>
+            <Route exact path='/Projects/CSG' component={Home}></Route>
+            <Route exact path="/Projects/CSG/schedule" component={ScheduleReview}></Route>
+            <Route exact path="/Projects/CSG/courses" component={ListOfCourses}></Route>
+            <Route exact path="/Projects/CSG/add" component={AddClassInfo}></Route>
+            <Route exact path="/Projects/CSG/admin" component={Admin}></Route>
+            <Route exact path="/Projects/CSG/login" component={Login}></Route>
+            <Route exact path="/Projects/CSG/register" component={Register}></Route>
           </Switch>
         </div>
         <Footer />
       </Router>
+      </BrowserRouter>
 
     );
   }
