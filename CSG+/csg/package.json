@@ -1,7 +1,6 @@
 {
   "name": "csg",
   "version": "0.1.0",
-  "homepage": "http://localhost/Projects/CSG",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",

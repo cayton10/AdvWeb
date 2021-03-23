@@ -11,11 +11,11 @@ export default class Login extends Component {
                 <form id="loginForm" className='my-5'>
                     <div className='row'>
                         <div className="form-group col-md-12 col-lg-6" >
-                            <label for="loginEmail">User Email</label>
+                            <label htmlFor="loginEmail">User Email</label>
                             <input type="email" className="form-control" id="loginEmail" placeholder="Ex: student@marshall.live.edu" />
                         </div>
                         <div className="form-group col-md-12 col-lg-6" >
-                            <label for="loginPassword">Password</label>
+                            <label htmlFor="loginPassword">Password</label>
                             <input type="password" className="form-control" id="loginPassword" placeholder="Ex: password" />
                         </div>
                     </div>            

@@ -38,6 +38,9 @@ homepage: "https://localhost/SubDirName/"
 ```
 flag in your package.json file. Once that's done, you can simply set the `<BrowserRouter basename="/SubDirName"> as your base. Set the <Link to=""> and <Route exact path=""> to the appropriate paths relative to the subdirectory which will host your application.
 
+<strong> ONLY DO THIS WHEN YOU'RE READY TO DEPLOY </strong> 
+You can store the basename in a constant for quickly adding / removing the path to your <Link>s and <Route>s, but also remember to remove the homepage field from your package.json file, or else your resources will not load correctly during development. 
+
 
 ### Course Detail Routing
 Going to need to go into more detail on how to correctly route the content for this from the table view of course offerings. I can't figure out where I'm going wrong with it. Tried <Redirect> but that didn't work.
