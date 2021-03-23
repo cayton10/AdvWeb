@@ -28,19 +28,11 @@ npm install --save react-router-dom
 ```
 
 ### Routing with Subdirectories
-Since this docker container has the capability to host individual build projects, I thought it'd be nice to have this work as a containerized repository to practice with, and I can also share this container environment with friends, colleagues, and potential employers to share / show work. When using the 
-```bash
-npx create-react-app {my app}
-``` 
-command, the project is built assuming that the build file will be placed in the server's root directory. Getting around this in order to put a final build project in a subdirectory was easy but not well documented. In order to deploy your react app with working links/routing, you have to first set the 
+Since this docker container is meant to act as a "portable repo", as well as a tool for development and production testing, it's necessary to be able to keep writing applications while also deploying them to a production environment. In order to have it both ways without having to specify paths for routing, the "homepage" variable in the project package.json to:
 ```JSON
-homepage: "https://localhost/SubDirName/"
+homepage: "."
 ```
-flag in your package.json file. Once that's done, you can simply set the `<BrowserRouter basename="/SubDirName"> as your base. Set the <Link to=""> and <Route exact path=""> to the appropriate paths relative to the subdirectory which will host your application.
-
-<strong> ONLY DO THIS WHEN YOU'RE READY TO DEPLOY </strong> 
-You can store the basename in a constant for quickly adding / removing the path to your <Link>s and <Route>s, but also remember to remove the homepage field from your package.json file, or else your resources will not load correctly during development. 
-
+in essence this tells the final build to reference whatever path the project is stored in as the root.
 
 ### Course Detail Routing
 Going to need to go into more detail on how to correctly route the content for this from the table view of course offerings. I can't figure out where I'm going wrong with it. Tried <Redirect> but that didn't work.
