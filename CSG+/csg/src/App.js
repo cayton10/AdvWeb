@@ -4,8 +4,8 @@ import {BrowserRouter as Router, Switch, Route, Link, BrowserRouter} from "react
 import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
 import logo from './logo.svg';
 import './App.css';
-//Subdirectory path constant
-const subdirPath = "/Projects/CSG"
+import settings from "./constants/settings.js";
+
 
 class App extends Component {
 
@@ -17,14 +17,14 @@ class App extends Component {
   render() {
     return (
 
-      <Router>
+      <Router basename={"Projects/CSG"}>
         <div className='container'>
           <div id='titleBar' className='align-items-center justify-content-around mb-3'>
             <div>
               <h1 id='appTitle'>Course Schedule Generator +</h1>
             </div>
             <div>
-              <img id='csgNavLogo' src='csgLogo.svg' alt='CSG logo'/> 
+              <img id='csgNavLogo' src={settings.path + 'csgLogo.svg'}  alt='CSG logo'/> 
             </div>
           </div>
           <nav className='navbar navbar-expand-lg navbar-dark bg-dark' id='headerNav'>

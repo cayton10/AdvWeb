@@ -24,6 +24,7 @@ services:
     environment:
       PMA_PORT: ${HOST_MACHINE_PMA_PORT}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REACT_PROJECT_BASENAME: ${REACT_PROJECT_BASENAME}
   node:
     build:
       context: "./bin/${NODE}"

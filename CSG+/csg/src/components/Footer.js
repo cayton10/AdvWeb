@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import settings from "../constants/settings.js";
 
 const Footer = () => {
 
@@ -52,9 +53,9 @@ const Footer = () => {
             </div>
           </nav>
           <div id='builtWith' className='d-flex justify-content-center' >
-              <img id='reactPNG' src='logo192.png' />
+              <img id='reactPNG' src={settings.path + 'logo192.png'} />
               <p id='builtWithP'>Built with React</p>
-              <img id='reactPNG' src='logo192.png' />
+              <img id='reactPNG' src={settings.path + 'logo192.png'} />
           </div>
           <div id='footTagLine' className='d-flex justify-content-center' >
             <p>&copy; <strong>{year}</strong> BPC All rights reserved.</p>
