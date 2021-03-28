@@ -1,5 +1,5 @@
 <?php
-require_once("../config/csg_config.php");
+require_once("csg_config.php");
 
 //must decode the json format we're receiving & get input
 $request = json_decode(file_get_contents('php://input'));
@@ -19,7 +19,7 @@ if(isset($request) && !empty($request))
     $is_Admin = $request->is_Admin;
 
 	//Store
-	$sql = "INSERT INTO `students` 
+	$sql = "INSERT INTO `user` 
 	(
 	`first_name`,
 	`last_name`,
@@ -30,7 +30,9 @@ if(isset($request) && !empty($request))
 	(
 	'{$first_name}',
 	'{$last_name}',
-	'{$email}'
+	'{$email}',
+	'{$password}',
+	'{$is_Admin}',
 	)
 	";
 
