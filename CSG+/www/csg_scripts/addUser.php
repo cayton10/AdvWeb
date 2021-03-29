@@ -1,12 +1,8 @@
 <?php
-require_once('config.php');
+require('config.php');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Access-Control-Allow-Headers: *');
-
-
-//must decode the json format we're receiving & get input
-$request = json_decode(file_get_contents('php://input'));
 
 
 if(isset($request) && !empty($request))
@@ -27,16 +23,17 @@ if(isset($request) && !empty($request))
 	
 	$sql = "INSERT INTO `user` 
 	(
-	`first_name`,
-	`last_name`,
-    `password`,
+	`user_id`
 	`email`,
+	`first_name`,
+    `last_name`,
+	`password`,
     `is_admin`,
 	) VALUES
 	(
+	'{$email}',
 	'{$first_name}',
 	'{$last_name}',
-	'{$email}',
 	'{$password}',
 	'{$is_Admin}',
 	)
@@ -45,6 +42,10 @@ if(isset($request) && !empty($request))
 	if(mysqli_query($con,$sql))
 	{
 		http_response_code(201);
+
+		$result['data'] = mysqli_affected_rows($con);
+		$mysqli->close();
+		echo json_encode($result);
 	}
 	else
 	{

@@ -115,7 +115,7 @@ export default class Register extends Component {
         //Check settings in constants dir for explanation
         axios.post(settings.proxy + '/csg_scripts/addUser.php', userObj)
             .then(result => {
-                console.log(result.data);
+                console.log(result);
                 if(result.status === "201") {
                     this.setState({
                         first_name: '',

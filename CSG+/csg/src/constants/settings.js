@@ -13,11 +13,11 @@ let proxyPath;
  */
 if(process.env.NODE_ENV === "production") {
     assetPath =  "";
-    proxyPath = "http://localhost:80";
+    proxyPath = "http://localhost";
 }
 else if(process.env.NODE_ENV === "development"){
     assetPath = "/";
-    proxyPath = "http://localhost:80";
+    proxyPath = "http://localhost";
 }
 
 
