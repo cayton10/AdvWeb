@@ -1,5 +1,9 @@
 # Course Schedule Generator +
 
+## Adding / Registering Users
+After having used jQuery for the last year, I tried to find some solutions for maniplulating DOM elements and adding transitions to things like coloring input fields if there are errors. I figured out how to do some of these things with CSS keyframes and vanilla JS. I also used [react-animation](https://nearform.github.io/react-animation/) module for giving slick display to updating error messaging. 
+
+
 ## Theme Development
 This project was started by copying the Dev_Container directory and changing some docker-compose specifics. Mainly, it invloves just renaming some directories and setting appropriate volumes / directory structures.
 

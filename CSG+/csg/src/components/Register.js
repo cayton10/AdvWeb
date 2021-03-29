@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
-
+import React, {Component} from 'react'; 
+import {AnimateOnChange} from 'react-animation';
+import axios from 'axios';
+import settings from "../constants/settings.js";
 export default class Register extends Component {
 
     constructor(props) {
@@ -12,6 +14,7 @@ export default class Register extends Component {
         this.enterPassword = this.enterPassword.bind(this);
         this.enterConfirmPassword = this.enterConfirmPassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.passwordCheck = this.passwordCheck.bind(this);
 
         //Store state variables here
         this.state = {
@@ -21,6 +24,7 @@ export default class Register extends Component {
             password: '',
             confirmPassword: '',
             passwordsMatch: true,
+            errorMessage: '',
         }
     }
 
@@ -39,16 +43,44 @@ export default class Register extends Component {
 
     enterPassword(e) {
         this.setState({password: e.target.value});
+        //If user starts inputting info and error handling has already been done, get rid of it
+
+        if(document.getElementById('registerPW').classList.contains('checkField')) {
+            document.getElementById('registerPW').classList.remove('checkField');
+            document.getElementById('registerConfirmPW').classList.remove('checkField');
+            this.setState({errorMessage: ''});
+        }
     }
 
     enterConfirmPassword(e) {
         this.setState({confirmPassword: e.target.value});
     }
 
+
     passwordCheck(pw1, pw2) {
+
+        //Declare these input fields here so branch access is easy
+        var pwField = document.getElementById('registerPW'); 
+        var confPwField = document.getElementById('registerConfirmPW');
+
+        //Show error styling
         if(pw1 !== pw2) {
-            this.setState({passwordsMath: false});
+
+            pwField.classList.add('checkField');
+            confPwField.classList.add('checkField');
+
+            this.setState({errorMessage: "Passwords do not match."});
+            
+            this.setState({passwordsMatch: false});
+
         } else if(pw1 === pw2) {
+            //Remove error styling
+
+            if(pwField.classList.contains('checkField')) {
+                pwField.classList.remove('checkField');
+                confPwField.classList.remove('checkField');
+            }
+
             this.setState({passwordsMatch: true});
         }
     }
@@ -61,7 +93,7 @@ export default class Register extends Component {
 
         this.passwordCheck(password, confirmPassword);
 
-        if(passwordsMatch != true) {
+        if(passwordsMatch !== true) {
             return;
         }
 
@@ -76,10 +108,32 @@ export default class Register extends Component {
             password: password
         }
 
+        //Debugging
         console.log(userObj);
+
+        //Send data via axios
+        //Check settings in constants dir for explanation
+        axios.post(settings.proxy + '/csg_scripts/addUser.php', userObj)
+            .then(result => {
+                console.log(result.data);
+                if(result.status === "201") {
+                    this.setState({
+                        first_name: '',
+                        last_name: '',
+                        email: '',
+                        password: '',
+                        confirmPassword: '',
+                    });
+                }
+            })
+            .catch(error => {
+                alert(error);
+            });
     }
 
     render() {
+
+
         return (
         <>
             <main id='mainContent'>
@@ -113,8 +167,17 @@ export default class Register extends Component {
                         </div>
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="registerConfirmPW">Confirm Password</label>
-                            <input type="password" className="form-control" onChange={this.enterConfirmPassword} value={this.state.confirmPassword} id="registerConfirmPW" placeholder="Password" required/>
+                            <input type="password" className="form-control" onChange={this.enterConfirmPassword} value={this.state.confirmPassword}id="registerConfirmPW" placeholder="Password" required/>
                         </div>
+                    </div>
+                    <div className='passwordError'>
+                        <AnimateOnChange
+                        animationIn="bounceIn"
+                        animationOut="bounceOut"
+                        durationOut={500}
+                        >
+                        <h4>{this.state.errorMessage}</h4>
+                        </AnimateOnChange>
                     </div>
                     
 
@@ -123,6 +186,7 @@ export default class Register extends Component {
                     </div>
                     
                 </form>
+            
             </main>
         </>
         )

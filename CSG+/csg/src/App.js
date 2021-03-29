@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route, Link, BrowserRouter} from "react-router-dom";
 import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
-import logo from './logo.svg';
 import './App.css';
 import settings from "./constants/settings.js";
 

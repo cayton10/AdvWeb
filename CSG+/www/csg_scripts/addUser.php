@@ -1,5 +1,9 @@
 <?php
-require_once("csg_config.php");
+require_once('config.php');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header('Access-Control-Allow-Headers: *');
+
 
 //must decode the json format we're receiving & get input
 $request = json_decode(file_get_contents('php://input'));
@@ -15,10 +19,12 @@ if(isset($request) && !empty($request))
 	$first_name = $request->first_name;
 	$last_name = $request->last_name;
 	$email = $request->email;
-    $password = md5($request->password);
-    $is_Admin = $request->is_Admin;
+    $password = $request->password;
+	$password = md5($password);
+    $is_Admin = 0;
 
-	//Store
+
+	
 	$sql = "INSERT INTO `user` 
 	(
 	`first_name`,

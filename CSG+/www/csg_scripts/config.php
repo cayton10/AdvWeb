@@ -24,14 +24,9 @@
         return $connect;
     }
 
+
+
     $con = connect();
-    /**
-     * Will have to see if classes are even necessary for this project
-     */
-    //define( 'PATH_TO_CLASSES',  $_SERVER['DOCUMENT_ROOT'] . '/CIT410/cayton10/EComm/classes/');
-    // PHP 7 way to do autoload
-    //spl_autoload_register(function ($class) {
-    //include PATH_TO_CLASSES . $class . '_class.php';
-    //});
+
 
 ?>
