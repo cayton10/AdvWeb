@@ -4,6 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header('Access-Control-Allow-Headers: *');
 
+//must decode the json format we're receiving & get input
+$request = json_decode(file_get_contents('php://input'));
 
 if(isset($request) && !empty($request))
 {
@@ -23,28 +25,29 @@ if(isset($request) && !empty($request))
 	
 	$sql = "INSERT INTO `user` 
 	(
-	`user_id`
 	`email`,
 	`first_name`,
     `last_name`,
 	`password`,
-    `is_admin`,
+    `is_admin`
 	) VALUES
 	(
 	'{$email}',
 	'{$first_name}',
 	'{$last_name}',
 	'{$password}',
-	'{$is_Admin}',
+	'{$is_Admin}'
 	)
 	";
+
+	
 
 	if(mysqli_query($con,$sql))
 	{
 		http_response_code(201);
+		//Store user id so we can put in localstorage after registration
+		$result['user'] = $con->insert_id;
 
-		$result['data'] = mysqli_affected_rows($con);
-		$mysqli->close();
 		echo json_encode($result);
 	}
 	else

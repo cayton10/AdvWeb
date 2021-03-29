@@ -69,6 +69,11 @@
   object-fit: fill;
 }
 
+
+.welcomeMssg {
+  color: cornflowerblue;
+}
+
 /*@media (prefers-reduced-motion: no-preference) {
   #csgNavLogo {
     animation: App-logo-spin infinite 20s linear;
@@ -99,16 +104,27 @@
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                               FOOTER STYLING                               */
+/* -------------------------------------------------------------------------- */
+
 html,
 body {
   height: 100%;
-  margin: 0;
+}
+
+.flexWrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .container {
   min-height: 100%;
-
+  flex-grow: 1;
 }
+
 
 
 /* -------------------------------------------------------------------------- */

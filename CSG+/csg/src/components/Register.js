@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {AnimateOnChange} from 'react-animation';
 import axios from 'axios';
 import settings from "../constants/settings.js";
+import { Redirect } from 'react-router';
+
 export default class Register extends Component {
 
     constructor(props) {
@@ -25,6 +27,7 @@ export default class Register extends Component {
             confirmPassword: '',
             passwordsMatch: true,
             errorMessage: '',
+            registered: false,
         }
     }
 
@@ -113,16 +116,18 @@ export default class Register extends Component {
 
         //Send data via axios
         //Check settings in constants dir for explanation
-        axios.post(settings.proxy + '/csg_scripts/addUser.php', userObj)
+        axios.post(settings.scriptServer + '/csg_scripts/addUser.php', userObj)
             .then(result => {
-                console.log(result);
-                if(result.status === "201") {
+
+                //If 201 "created" set loggedIn state variable to redirect user
+                if(result.status == 201) {
+                    //Set local storage for the session
+                    localStorage.setItem('userName', first_name);
+                    localStorage.setItem('user_id', result.data.user);
+                    localStorage.setItem('userLoggedIn', "true");
+
                     this.setState({
-                        first_name: '',
-                        last_name: '',
-                        email: '',
-                        password: '',
-                        confirmPassword: '',
+                        registered: true,
                     });
                 }
             })
@@ -134,6 +139,10 @@ export default class Register extends Component {
     render() {
 
 
+        //Conditionally render based on registration status
+        if(this.state.registered) {
+            return <Redirect to={'/courses'} />
+        }
         return (
         <>
             <main id='mainContent'>
@@ -184,7 +193,6 @@ export default class Register extends Component {
                     <div id='registrationSubmit' className='d-flex justify-content-around py-5 form-group'>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
-                    
                 </form>
             
             </main>
