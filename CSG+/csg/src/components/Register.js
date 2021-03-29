@@ -126,6 +126,9 @@ export default class Register extends Component {
                     localStorage.setItem('user_id', result.data.user);
                     localStorage.setItem('userLoggedIn', "true");
 
+                    //Call parent App() method to update state
+                    this.props.handleUser(first_name);
+
                     this.setState({
                         registered: true,
                     });
@@ -141,7 +144,7 @@ export default class Register extends Component {
 
         //Conditionally render based on registration status
         if(this.state.registered) {
-            return <Redirect to={'/'} />
+            return <Redirect to={'/courses'} />
         }
         return (
         <>

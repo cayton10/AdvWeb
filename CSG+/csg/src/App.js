@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
 import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
 import {AnimateOnChange} from 'react-animation';
 import './App.css';
@@ -11,6 +11,8 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+
+    this.handleUserChange = this.handleUserChange.bind(this);
 
     this.state = {
       userId: '',
@@ -39,6 +41,7 @@ class App extends Component {
         isAdmin: true,
         loggedIn: true,
       });
+      
     } else if(loggedIn) {
 
       const userName = localStorage.getItem('userName');
@@ -49,8 +52,13 @@ class App extends Component {
         loggedIn: true,
       })
     }
-    
-    
+  }
+
+  //Update state method and pass through registration / sign in components
+  handleUserChange(fname) {
+    this.setState({
+      userName: fname,
+    });
   }
 
   render() {
@@ -131,7 +139,7 @@ class App extends Component {
               <Route exact path="/add" component={AddClassInfo}></Route>
               <Route exact path="/admin" component={Admin}></Route>
               <Route exact path="/login" component={Login}></Route>
-              <Route exact path="/register" component={Register}></Route>
+              <Route render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
             </Switch>
           </div>
           <Footer />
