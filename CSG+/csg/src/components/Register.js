@@ -141,7 +141,7 @@ export default class Register extends Component {
 
         //Conditionally render based on registration status
         if(this.state.registered) {
-            return <Redirect to={'/courses'} />
+            return <Redirect to={'/'} />
         }
         return (
         <>
