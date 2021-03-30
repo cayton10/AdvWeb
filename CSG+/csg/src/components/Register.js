@@ -126,7 +126,7 @@ export default class Register extends Component {
                     localStorage.setItem('userLoggedIn', "true");
 
                     //Call parent App() method to update state
-                    this.props.handleUser(first_name);
+                    this.props.handleUser(first_name, 0);
 
                     this.setState({
                         registered: true,
@@ -187,7 +187,7 @@ export default class Register extends Component {
                         animationOut="bounceOut"
                         durationOut={500}
                         >
-                        <h4>{this.state.errorMessage}</h4>
+                        <h4 className='errorMssg'>{this.state.errorMessage}</h4>
                         </AnimateOnChange>
                     </div>
                     

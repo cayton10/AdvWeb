@@ -12,23 +12,45 @@ export default class Login extends Component {
         this.enterEmail = this.enterEmail.bind(this);
         this.enterPassword = this.enterPassword.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.showError = this.showError.bind(this);
 
         this.state = {
             email: null,
             password: null,
             firstName: null,
-            errorMessage: null,
-            isAdmin: null,
+            errorMessage: '',
             loggedIn: null,
         }
     }
 
     enterEmail(e) {
         this.setState({email: e.target.value});
+
+        if(document.getElementById('loginEmail').classList.contains('checkField')) {
+            document.getElementById('loginEmail').classList.remove('checkField');
+            document.getElementById('loginPassword').classList.remove('checkField');
+            this.setState({errorMessage: ''});
+        }
     }
 
     enterPassword(e) {
         this.setState({password: e.target.value});
+
+        if(document.getElementById('loginEmail').classList.contains('checkField')) {
+            document.getElementById('loginEmail').classList.remove('checkField');
+            document.getElementById('loginPassword').classList.remove('checkField');
+            this.setState({errorMessage: ''});
+        }
+    }
+
+    showError() {
+        var eField = document.getElementById('loginEmail');
+        var pwField = document.getElementById('loginPassword');
+
+        eField.classList.add('checkField');
+        pwField.classList.add('checkField');
+
+        this.setState({errorMessage: "Incorrect credentials. Check validity or register new user."});
     }
 
     handleLogin(e) {
@@ -43,9 +65,8 @@ export default class Login extends Component {
             password: password,
         }
 
-        //console.log(loginObj);
 
-
+        
         //Send data via axios
         //Check settings in constants dir for explanation
         axios.post(settings.scriptServer + '/csg_scripts/loginUser.php', loginObj)
@@ -54,14 +75,29 @@ export default class Login extends Component {
                 if(result.data != 200) {
 
                     console.log(result);
+
+                    if(result.data == null) {
+
+                        this.showError();
+
+                        return;
+                    }
+
                     //Set local storage for the session
                     localStorage.setItem('userName', result.data.first_name);
                     localStorage.setItem('user_id', result.data.user_id);
                     localStorage.setItem('userLoggedIn', "true");
                     localStorage.setItem('role', result.data.is_admin);
 
+                    var adminRole = false;
+                    //Set admin boolean if appropriate
+                    if(localStorage.getItem('role') === "1") {
+                        adminRole = true;
+                    }
+
+
                     //Call parent App() method to update state
-                    this.props.handleUser(result.data.first_name);
+                    this.props.handleUser(result.data.first_name, adminRole);
 
                     this.setState({
                         loggedIn: true,
@@ -69,7 +105,7 @@ export default class Login extends Component {
                 }
             })
             .catch(error => {
-                alert(error);
+                console.log(error);
             });
     }
 
@@ -103,7 +139,7 @@ export default class Login extends Component {
                         animationOut="bounceOut"
                         durationOut={500}
                         >
-                        <h4>{this.state.errorMessage}</h4>
+                        <h4 className='errorMssg'>{this.state.errorMessage}</h4>
                         </AnimateOnChange>
                     </div>           
 

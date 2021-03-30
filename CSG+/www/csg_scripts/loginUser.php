@@ -20,7 +20,7 @@ if(isset($request) && !empty($request))
 	$password = md5(htmlspecialchars(stripslashes(($password))));
 	
 	$sql = "SELECT first_name, is_admin, user_id
-             FROM `user` WHERE `email` = '" . $email . "' AND `password` = '" . $password . "'";	
+             FROM `user` WHERE `email` = '" . $email . "' AND `password` = '" . $password . "'";
 
     $result = mysqli_query($con, $sql);
     

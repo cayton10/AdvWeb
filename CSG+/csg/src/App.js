@@ -28,6 +28,7 @@ class App extends Component {
     const loggedIn = localStorage.getItem('userLoggedIn');
     const isAdmin = localStorage.getItem('isAdmin');
 
+
     console.log(loggedIn);
     console.log(isAdmin);
 
@@ -55,12 +56,15 @@ class App extends Component {
   }
 
   //Update state method and pass through registration / sign in components
-  handleUserChange(fname) {
-    
+  handleUserChange(fname, admin) {
+
     return this.setState({
       userName: fname,
       loggedIn: true,
+      isAdmin: admin,
     })
+
+    
   }
 
   render() {
@@ -150,8 +154,12 @@ class App extends Component {
               <Route exact path="/courses" component={ListOfCourses}></Route>
               <Route exact path="/add" component={AddClassInfo}></Route>
               <Route exact path="/admin" component={Admin}></Route>
-              <Route render={(props) => (<Login {...props} handleUser={this.handleUserChange} />)}/>
-              <Route render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
+              <Route
+                path="/login" 
+                render={(props) => (<Login {...props} handleUser={this.handleUserChange} />)}/>
+              <Route
+                path="/register"
+                render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
             </Switch>
           </div>
           <Footer />
