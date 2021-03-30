@@ -111,8 +111,7 @@ export default class Register extends Component {
             password: password
         }
 
-        //Debugging
-        console.log(userObj);
+        //console.log(userObj);
 
         //Send data via axios
         //Check settings in constants dir for explanation

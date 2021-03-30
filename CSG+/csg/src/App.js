@@ -15,8 +15,8 @@ class App extends Component {
     this.handleUserChange = this.handleUserChange.bind(this);
 
     this.state = {
-      userId: '',
-      userName: '',
+      userId: null,
+      userName: null,
       loggedIn: false,
       isAdmin: false,
     };
@@ -56,9 +56,11 @@ class App extends Component {
 
   //Update state method and pass through registration / sign in components
   handleUserChange(fname) {
-    this.setState({
+    
+    return this.setState({
       userName: fname,
-    });
+      loggedIn: true,
+    })
   }
 
   render() {
@@ -128,7 +130,17 @@ class App extends Component {
                   </ul>
                 </div>
                 :
-                ''
+                <div className='nameTag'>
+                  <ul className='navbar-nav'>
+                  <AnimateOnChange
+                    animationIn="bounceIn"
+                    animationOut="bounceOut"
+                    durationOut={500}
+                    >
+                    <li className='nav-item welcomeMssg'>Welcome</li>
+                    </AnimateOnChange>
+                  </ul>
+                </div>
               }
               <div className='nameTag'></div>
             </nav>
@@ -138,7 +150,7 @@ class App extends Component {
               <Route exact path="/courses" component={ListOfCourses}></Route>
               <Route exact path="/add" component={AddClassInfo}></Route>
               <Route exact path="/admin" component={Admin}></Route>
-              <Route exact path="/login" component={Login}></Route>
+              <Route render={(props) => (<Login {...props} handleUser={this.handleUserChange} />)}/>
               <Route render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
             </Switch>
           </div>
