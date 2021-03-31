@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import React from 'react';
+import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LogAccess from './LogAccess';
+import AdminAccess from './AdminAccess';
 import settings from "../constants/settings.js";
 
-const Footer = () => {
+const Footer = ({logStatus, adminStatus, handleLogOut}) => {
+
+    const log = logStatus;
+    const admin = adminStatus;
+    const logout = handleLogOut;
 
     const d = new Date();
     const year = d.getFullYear();
@@ -29,26 +35,11 @@ const Footer = () => {
                     Courses
                   </Link>
                 </li>
-                <li className='nav-item'>
-                  <Link to={"/add"} className='nav-link'>
-                    Add Info
-                  </Link>
-                </li>
-                <li className='nav-item'>
-                  <Link to={"/login"} className='nav-link'>
-                    Login
-                  </Link>
-                </li>
-                <li className='nav-item'>
-                  <Link to={"/register"} className='nav-link'>
-                    Register
-                  </Link>
-                </li>
-                <li className='nav-item pull-right'>
-                  <Link to={"/admin"} className='nav-link'>
-                    Admin
-                  </Link>
-                </li>
+
+                <LogAccess logStatus={log} handleLogOut={logout} />
+                
+                <AdminAccess adminStatus={admin} />
+
               </ul>
             </div>
           </nav>

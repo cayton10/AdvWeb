@@ -69,6 +69,15 @@
   object-fit: fill;
 }
 
+
+.welcomeMssg {
+  color: cornflowerblue;
+}
+
+.errorMssg {
+  color: rgb(227, 97, 97)
+}
+
 /*@media (prefers-reduced-motion: no-preference) {
   #csgNavLogo {
     animation: App-logo-spin infinite 20s linear;
@@ -99,15 +108,46 @@
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                               FOOTER STYLING                               */
+/* -------------------------------------------------------------------------- */
+
 html,
 body {
   height: 100%;
-  margin: 0;
+}
+
+.flexWrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .container {
   min-height: 100%;
+  flex-grow: 1;
+}
 
+
+
+/* -------------------------------------------------------------------------- */
+/*                           ERROR HANDLING STYLING                           */
+/* -------------------------------------------------------------------------- */
+.checkField {
+  animation-name: error;
+  animation-duration: 0.35s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes error {
+  100.0%  {background-color: #ff393966;}
+}
+
+.passwordError {
+  display: flex;
+  justify-content: space-around;
 }
 
 
