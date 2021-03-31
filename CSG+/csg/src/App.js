@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
-import {ScheduleReview, ListOfCourses, AddClassInfo, Admin, Login, Register, Footer, Home} from './components';
+import {ScheduleReview, 
+        ListOfCourses, 
+        AddClassInfo, 
+        Admin, 
+        Login, 
+        Register, 
+        Footer, 
+        Home,
+        LogAccess,
+        AdminAccess} from './components';
 import {AnimateOnChange} from 'react-animation';
 import './App.css';
 import settings from "./constants/settings.js";
@@ -13,6 +22,7 @@ class App extends Component {
     super(props);
 
     this.handleUserChange = this.handleUserChange.bind(this);
+    this.handleLogOutState = this.handleLogOutState.bind(this);
 
     this.state = {
       userId: null,
@@ -25,46 +35,43 @@ class App extends Component {
   componentDidMount() {
     //Changes to component so we can change the document title
     document.title = "CSG+";
-    const loggedIn = localStorage.getItem('userLoggedIn');
-    const isAdmin = localStorage.getItem('isAdmin');
-
+    const loggedIn = this.state.loggedIn;
 
     console.log(loggedIn);
-    console.log(isAdmin);
 
-    if(loggedIn && isAdmin) {
-      const userName = localStorage.getItem('userName');
-      const userId = localStorage.getItem('user_id');
-
-      this.setState({
-        userId: userId,
-        userName: userName,
-        isAdmin: true,
-        loggedIn: true,
-      });
-      
-    } else if(loggedIn) {
+    if(loggedIn) {
 
       const userName = localStorage.getItem('userName');
       const userId = localStorage.getItem('user_id');
+
       this.setState({
         userId: userId,
         userName: userName,
         loggedIn: true,
       })
-    }
+    } 
+
   }
 
   //Update state method and pass through registration / sign in components
   handleUserChange(fname, admin) {
-
+      
     return this.setState({
       userName: fname,
       loggedIn: true,
       isAdmin: admin,
     })
 
-    
+  }
+
+  handleLogOutState() {
+    //Use callback after setState to clear local storage
+    return this.setState({
+      userName: '',
+      loggedIn: false,
+      isAdmin: false,
+    }, () =>
+      localStorage.clear());
   }
 
   render() {
@@ -98,26 +105,11 @@ class App extends Component {
                       Courses
                     </Link>
                   </li>
-                  <li className='nav-item'>
-                    <Link to={"/login"} className='nav-link'>
-                      Login
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to={"/register"} className='nav-link'>
-                      Register
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to={"/add"} className='nav-link'>
-                      Add Info
-                    </Link>
-                  </li>
-                  <li className='nav-item pull-right'>
-                    <Link to={"/admin"} className='nav-link'>
-                      Admin
-                    </Link>
-                  </li>
+
+                  <LogAccess logStatus={this.state.loggedIn} handleLogOut={this.handleLogOutState}/>
+
+                  <AdminAccess adminStatus={this.state.isAdmin} />
+
                 </ul>
               </div>
               {
@@ -141,7 +133,7 @@ class App extends Component {
                     animationOut="bounceOut"
                     durationOut={500}
                     >
-                    <li className='nav-item welcomeMssg'>Welcome</li>
+                    <li className='nav-item welcomeMssg'>Welcome to CSG+</li>
                     </AnimateOnChange>
                   </ul>
                 </div>
@@ -162,7 +154,9 @@ class App extends Component {
                 render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
             </Switch>
           </div>
-          <Footer />
+          <Footer logStatus={this.state.loggedIn} 
+                  adminStatus={this.state.isAdmin} 
+                  handleLogOut={this.handleLogOutState}/>
         </div>
       </Router>
     );

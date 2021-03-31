@@ -56,7 +56,7 @@ export default class Login extends Component {
     handleLogin(e) {
 
         //Destructure state variables
-        const {email, password, firstName, errorMessage} = this.state;
+        const {email, password} = this.state;
 
         e.preventDefault();
 

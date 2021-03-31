@@ -1,8 +1,23 @@
 # Course Schedule Generator +
 
 ## Adding / Registering Users
-After having used jQuery for the last year, I tried to find some solutions for maniplulating DOM elements and adding transitions to things like coloring input fields if there are errors. I figured out how to do some of these things with CSS keyframes and vanilla JS. I also used [react-animation](https://nearform.github.io/react-animation/) module for giving slick display to updating error messaging. 
+After having used jQuery for the last year, I tried to find some solutions for maniplulating DOM elements and adding transitions to things like coloring input fields if there are errors. I figured out how to do some of these things with CSS keyframes and vanilla JS. I also used [react-animation](https://nearform.github.io/react-animation/) module for giving slick display to updating error messaging.
 
+### Getting This Project to Run
+
+- You'll have to clone the repo, and build the container up from the docker-compose file in the CSG+ directory
+- Once that's done, enter 'localhost' in your web browser.
+- Open phpMyAdmin
+- To import the SQL and build the database for CSG+, from the root of this repo, navigate to Databases > CSG+ > SQL > dbServer.sql
+- You may have to create a user with permissions to access the csgdb database. DB_USER: csg_user, DB_PASS: csg_Pa$$word
+- The above credentials are used in the php scripts for database access
+- If you have any trouble contact me.
+
+### Using State
+I tried refactoring as much code as I could before this was due. After really getting into the guts of this framework I really started to understand how to update state and use it to my advantage. 
+
+### Using Props
+One of the most productive features I've found with state, components, and props is the ability to pass component methods to affect state in the base application. So, by passing handler methods to child components, you can affect state in the parent component and re-render appropriately. I didn't catch on to this until later in the development of this first project, but I'm glad I'm getting the hang of it.
 
 ## Theme Development
 This project was started by copying the Dev_Container directory and changing some docker-compose specifics. Mainly, it invloves just renaming some directories and setting appropriate volumes / directory structures.
