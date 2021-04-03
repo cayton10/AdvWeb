@@ -17,6 +17,7 @@ export default class Register extends Component {
         this.enterConfirmPassword = this.enterConfirmPassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.passwordCheck = this.passwordCheck.bind(this);
+        this.clearErrorStyles = this.clearErrorStyles.bind(this);
 
         //Store state variables here
         this.state = {
@@ -45,18 +46,24 @@ export default class Register extends Component {
     }
 
     enterPassword(e) {
-        this.setState({password: e.target.value});
         //If user starts inputting info and error handling has already been done, get rid of it
+        this.clearErrorStyles();
+        this.setState({password: e.target.value});
+        
+        
+    }
 
+    enterConfirmPassword(e) {
+        this.clearErrorStyles();
+        this.setState({confirmPassword: e.target.value});
+    }
+
+    clearErrorStyles() {
         if(document.getElementById('registerPW').classList.contains('checkField')) {
             document.getElementById('registerPW').classList.remove('checkField');
             document.getElementById('registerConfirmPW').classList.remove('checkField');
             this.setState({errorMessage: ''});
         }
-    }
-
-    enterConfirmPassword(e) {
-        this.setState({confirmPassword: e.target.value});
     }
 
 
@@ -74,7 +81,7 @@ export default class Register extends Component {
 
             this.setState({errorMessage: "Passwords do not match."});
             
-            this.setState({passwordsMatch: false});
+            return false;
 
         } else if(pw1 === pw2) {
             //Remove error styling
@@ -84,7 +91,7 @@ export default class Register extends Component {
                 confPwField.classList.remove('checkField');
             }
 
-            this.setState({passwordsMatch: true});
+            return true;
         }
     }
 
@@ -92,17 +99,16 @@ export default class Register extends Component {
     //Submit form function
     handleSubmit(e) {
 
-        const {first_name, last_name, email, password, confirmPassword, passwordsMatch} = this.state;
-
-        this.passwordCheck(password, confirmPassword);
-
-        if(passwordsMatch !== true) {
-            return;
-        }
-
         //Prevent default form submission
         e.preventDefault();
 
+        const {first_name, last_name, email, password, confirmPassword} = this.state;
+
+        let check = this.passwordCheck(password, confirmPassword);
+
+        if(check === false) {
+            return false;
+        }
 
         const userObj = {
             first_name: first_name,

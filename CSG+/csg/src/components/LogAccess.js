@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {AnimateOnChange} from 'react-animation';
 
 export default class LogAccess extends Component {
 
@@ -23,17 +24,30 @@ export default class LogAccess extends Component {
         } else {
             return (
                 <>
-                <li className='nav-item'>
-                    <Link to={"/login"} className='nav-link'>
-                      Login
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to={"/register"} className='nav-link'>
-                      Register
-                    </Link>
-                  </li>
-                  </>
+                    <AnimateOnChange
+                    animationIn="popIn"
+                    animationOut="popOut"
+                    durationOut={500}
+                    >
+                    <li className='nav-item'>
+                        <Link to={"/login"} className='nav-link'>
+                        Login
+                        </Link>
+                    </li>
+                    </AnimateOnChange>
+                
+                    <AnimateOnChange
+                    animationIn="popIn"
+                    animationOut="popOut"
+                    durationOut={500}
+                    >
+                    <li className='nav-item'>
+                        <Link to={"/register"} className='nav-link'>
+                        Register
+                        </Link>
+                    </li>
+                    </AnimateOnChange>
+                </>
             )
         }
     }
