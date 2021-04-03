@@ -105,11 +105,10 @@ class App extends Component {
                       Courses
                     </Link>
                   </li>
+                 
+                    <LogAccess logStatus={this.state.loggedIn} handleLogOut={this.handleLogOutState}/>
 
-                  <LogAccess logStatus={this.state.loggedIn} handleLogOut={this.handleLogOutState}/>
-
-                  <AdminAccess adminStatus={this.state.isAdmin} />
-
+                    <AdminAccess adminStatus={this.state.isAdmin} />
                 </ul>
               </div>
               {
