@@ -13,7 +13,7 @@ export default class AdminAccess extends Component {
 
         const props = this.props
 
-        if(props.adminStatus == true) {
+        if(props.adminStatus === true) {
             return(
                 <>
                 <AnimateOnChange
@@ -23,7 +23,7 @@ export default class AdminAccess extends Component {
                     >
                     <li className='nav-item'>
                         <Link to={"/add"} className='nav-link'>
-                            Add Info
+                            Add Courses
                         </Link>
                     </li>
                     </AnimateOnChange>

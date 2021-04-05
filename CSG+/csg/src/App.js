@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Switch, Route, Link, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {ScheduleReview, 
         ListOfCourses, 
         AddClassInfo, 
@@ -35,11 +35,11 @@ class App extends Component {
   componentDidMount() {
     //Changes to component so we can change the document title
     document.title = "CSG+";
-    const loggedIn = this.state.loggedIn;
+    const loggedIn = localStorage.getItem('userLoggedIn');
 
     console.log(loggedIn);
 
-    if(loggedIn) {
+    if(loggedIn === 'true') {
 
       const userName = localStorage.getItem('userName');
       const userId = localStorage.getItem('user_id');
@@ -49,7 +49,15 @@ class App extends Component {
         userName: userName,
         loggedIn: true,
       })
-    } 
+      
+      if(userName === 'Admin') {
+        this.setState({
+          isAdmin: true,
+        })
+      }
+    }
+
+    console.log(loggedIn); 
 
   }
 

@@ -125,7 +125,7 @@ export default class Register extends Component {
             .then(result => {
 
                 //If 201 "created" set loggedIn state variable to redirect user
-                if(result.status == 201) {
+                if(result.status === 201) {
                     //Set local storage for the session
                     localStorage.setItem('userName', first_name);
                     localStorage.setItem('user_id', result.data.user);
