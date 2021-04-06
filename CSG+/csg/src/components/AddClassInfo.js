@@ -17,7 +17,6 @@ export default class AddClassInfo extends Component {
             courseDays: null,
             instructor: null,
             syllabusFile: null,
-            syllabusName: null,
         }
 
         //Bind functions
@@ -70,7 +69,6 @@ export default class AddClassInfo extends Component {
     attachSyllabus(e) {
         //Set state variable
         this.setState({syllabusFile: e.target.files[0]});
-        this.setState({syllabusName: e.target.files[0].name});
 
         //Now change info on form
         var files = e.target.files;
@@ -89,13 +87,12 @@ export default class AddClassInfo extends Component {
                 courseDays,
                 courseSection,
                 instructor,
-                syllabus} = this.state;
+                syllabusFile,} = this.state;
 
         const courseObj = {
             alpha: courseAlpha,
             number: courseNumber,
             title: courseTitle,
-            syllabus: syllabus,
         }
 
         const classObj = {
@@ -109,17 +106,35 @@ export default class AddClassInfo extends Component {
         e.preventDefault();
 
         //Create formdata object so we can append the img to it
-        var formData = new FormData();
-        formData.append('course', courseObj);
-        formData.append('section', classObj);
+        let formData = new FormData();
 
-        console.log(this.state);
+        //Iterate through course and class objects to load form data
+        for(var key in courseObj) {
+            formData.append(key, courseObj[key]);
+        }
+
+        for(var item in classObj) {
+            formData.append(item, classObj[item]);
+        }
+
+        //Handle entries for no syllabus
+        if(syllabusFile !== null) {
+            //Add the syllabus file
+            formData.append('file', syllabusFile, syllabusFile.name);
+        }
+        
+
 
         //Fire an axios POST with all of our information, take care of logic on php side
-        //axios.post(settings.scriptServer + '/csg_scripts/checkCourse.php', )
-          //  .then(result => {
-
-            //})
+        axios.post(settings.scriptServer + '/csg_scripts/addClass.php', formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+            .then(result => {
+                console.log(result.data);
+            })
+            .catch(error => console.log(error))
 
 
         console.log("HERE");
@@ -180,7 +195,7 @@ export default class AddClassInfo extends Component {
                         </div>
                     </div>
                     <div className="form-group col-md-12 mt-3">
-                        <input type="file" className="custom-file-input" id="customFile" onChange={this.attachSyllabus}/>
+                        <input type="file" accept="image/jpeg, image/gif, image/png, application/pdf, .doc,.docx" className="custom-file-input" id="customFile" onChange={this.attachSyllabus}/>
                         <label id="fileLabel" className="custom-file-label" htmlFor="customFile">Upload Syllabus</label>
                     </div>
                     
