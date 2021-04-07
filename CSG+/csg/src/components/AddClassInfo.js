@@ -69,12 +69,16 @@ export default class AddClassInfo extends Component {
     attachSyllabus(e) {
         //Set state variable
         this.setState({syllabusFile: e.target.files[0]});
-
+        var field = document.getElementById("fileLabel");
         //Now change info on form
         var files = e.target.files;
-        var fileName = files[0].name;
-        var field = document.getElementById("fileLabel");
-        field.innerHTML = fileName;
+
+        if(files) {
+            var fileName = files[0].name;
+            field.innerHTML = fileName;
+        } else {
+            field.innerHTML = "Upload Syllabus";
+        }   
     }
 
     handleAddClass(e) {
@@ -135,9 +139,6 @@ export default class AddClassInfo extends Component {
                 console.log(result.data);
             })
             .catch(error => console.log(error))
-
-
-        console.log("HERE");
     }
 
     render() {
