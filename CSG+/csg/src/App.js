@@ -10,7 +10,8 @@ import {ScheduleReview,
         Footer, 
         Home,
         LogAccess,
-        AdminAccess} from './components';
+        AdminAccess,
+        ClassDetail} from './components';
 import {AnimateOnChange} from 'react-animation';
 import './App.css';
 import settings from "./constants/settings.js";
@@ -154,6 +155,9 @@ class App extends Component {
               <Route
                 path="/register"
                 render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
+              <Route 
+                path="/course_sections" 
+                render={(props) => (<ClassDetail {...props} />)}/>
             </Switch>
           </div>
           <Footer logStatus={this.state.loggedIn} 

@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, {Component} from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import ClassDetail from './ClassDetail';
 import CourseCard from './CourseCard';
-import {AnimateOnChange} from 'react-animation';
 import settings from "../constants/settings.js";
 
 
@@ -28,9 +26,11 @@ export default class ListOfCourses extends Component {
                     allCourses: result.data
                 });
 
+                /*
                 this.state.allCourses.map(function(object, i) {
                     console.log("Object", object, "id ", object.course_id);
                 })
+                */
             })
             .catch(function (error) {
                 console.log(error);
@@ -55,6 +55,7 @@ export default class ListOfCourses extends Component {
                             <h2>Course Listing</h2>
                         </div>
                         <div className='courseListing'>
+                            <div className='row'>                            
                             {
                                 this.state.allCourses.length > 0
                                 ?
@@ -62,6 +63,7 @@ export default class ListOfCourses extends Component {
                                 :
                                 ''
                             }
+                            </div>
                         </div>
                         <table className="table mt-4" id='scheduleTable'>
                             <thead className="thead-dark">
@@ -75,7 +77,7 @@ export default class ListOfCourses extends Component {
                                 <tr className='classTuple'>
                                 <th scope="row">Advanced Web Programming</th>
                                     <td>CIT416</td>
-                                    <td><Link to="courses/course_sections">View</Link></td>
+                                    <td><Link to="/course_sections">View</Link></td>
                                 </tr>
                                 <tr className='classTuple'>
                                 <th scope="row">Advanced Web Programming</th>
@@ -92,13 +94,6 @@ export default class ListOfCourses extends Component {
                             </tbody>
                         </table>
                     </main>
-            <Router>
-                    
-                <Switch>
-                    <Route exact path='courses/course_sections' component={ClassDetail}></Route>
-                </Switch>
-                
-            </Router>
             </>
             
         )

@@ -150,5 +150,10 @@ body {
   justify-content: space-around;
 }
 
+.card-header {
+  background-color: #282c34;
+  color: #9a9d9f
+}
+
 
 
