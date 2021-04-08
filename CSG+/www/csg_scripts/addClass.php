@@ -8,9 +8,15 @@ header('Access-Control-Allow-Headers: *');
 /*print_r($_POST);
 print_r($_FILES);*/
 
+//Instantiate required objects
+$courseObj = new Course();
+$instructorObj = new Instructor();
+$sectionObj = new Section();
+
 $fileName = '';
 $courseID;
-$response ;
+$instructorID;
+$response;
 
 if(!empty($_FILES))
 {
@@ -25,9 +31,7 @@ if(!empty($_FILES))
     $success = move_uploaded_file($_FILES['file']['tmp_name'], "./syllabi/" . $fileName);
 }
 
-
-
-
+//Load up all of our required course / class data
 if(isset($_POST) && !empty($_POST))
 {
     //Sanitize and prep
@@ -41,46 +45,29 @@ if(isset($_POST) && !empty($_POST))
     $days = htmlspecialchars(trim(stripslashes($_POST['days'])));
 
 
-    //If course isn't already in course table, add it, else grab the id for section relation
-    $selectCourse = "SELECT course_id FROM course
-                    WHERE course_alpha = '" . $alpha . "' AND course_num = '" . $number . "'";
 
-    $course = mysqli_query($con, $selectCourse);
-    print_r($course);
+    //Check if the course is already in DB
+    $course = $courseObj->getCourse($alpha, $number, $con);
 
-/* --------------------- INSERT THE COURSE IN NONE EXISTS -------------------- */
+
+/* --------------------- INSERT THE COURSE IF NONE EXISTS -------------------- */
     if($course->num_rows < 1) 
     {
-        $sql = '';
-
-        //Construct query w/ no syllabus
-        if($fileName === '')
-        {
-            $sql = "INSERT INTO `course`
-            (`course_alpha`,`course_num`,`course_title`)
-            VALUES
-            (`{$alpha}`,`{$number}`,`{$title}`)";
-
-        } else { //Construct if a syllabus is sent
-
-            $sql = "INSERT INTO `course`
-            (`course_alpha`,`course_num`,`course_title`,`course_syl`)
-            VALUES
-            (`{$alpha}`,`{$number}`,`{$title}`,`{$fileName}`)";
-        }
+        //Created class function to cut down on branching in this script
+        $sql = $courseObj->addCourse($alpha, $number, $title, $fileName);
 
         if(mysqli_query($con, $sql))
         {
             $response['success'] = true;
-            $response['course'] = "Course added";
+            $response['message'] = "Course added";
             $courseID = $con->insert_id;
         }
         else
         {
             $response['success'] = false;
-            $response['course'] = "Add course failed";
+            $response['message'] = "Add course failed";
 
-            echo_json_response($response);
+            echo json_encode($response);
             exit();
         }
         
@@ -90,6 +77,8 @@ if(isset($_POST) && !empty($_POST))
         $row = mysqli_fetch_assoc($course);
         $courseID = $row['course_id'];
     }
+
+/* ---------------- ENTER THE INSTRUCTOR IF IT DOESN'T EXIST ---------------- */
 
     //Query the db for the instructor sent via axios and add if null
     //Get the first and last name of instructor because I forgot to add a first and
@@ -103,31 +92,68 @@ if(isset($_POST) && !empty($_POST))
         $last = $names[1];
     }
 
+    $instructor = $instructorObj->getInstructor($first, $last, $con);
+
+    $instResp;
+    //If instructor does not exist, add them
+    if($instructor->num_rows < 1)
+    {
+        $instResp = $instructorObj->addInstructor($first, $last, $con);
+
+        if($instResp['success'])
+        {
+            $instructorID = $instResp['instructorID'];
+        }
+        else
+        {
+            $response['success'] = false;
+            $resposne['message'] = "Failed to add instructor";
+
+            echo json_encode($response);
+            exit();
+        }
+    }
+    else //Need the instructor ID for adding info to course section
+    {
+        $row = mysqli_fetch_assoc($instructor);
+        $instructorID = $row['instructor_id'];
+    }
 
 /* -------------------------------------------------------------------------- */
 /*                            INSERT COURSE SECTION                           */
 /* -------------------------------------------------------------------------- */
 
-    /*$insertSection = "INSERT INTO `class`
-    (
-        `course_id`,
-        "*/
-}	
-/*
-	if(mysqli_query($con,$sql))
-	{
-		http_response_code(201);
-		//Store user id so we can put in localstorage after registration
-		$result['user'] = $con->insert_id;
+    //Check duplicate course section
+    $checkSection = $sectionObj->getSection($section, $courseID, $con);
+    //Handle appropriately based on result
+    if($checkSection->num_rows < 1)
+    {
+        $section = $sectionObj->addSection($section, $courseID, $instructorID, $days, $start, $end, $con);
+        if($section['success'])
+        {
+            $response['success'] = true;
+            $response['message'] = "Course information added successfully";
+            echo json_encode[$response];
+            exit();
+        }
+        else
+        {
+            $response['success'] = false;
+            $response['message'] = "Could not add section information. Contact admin";
+            echo json_encode($response);
+            exit();
+        }
+    }
+    else
+    {
+        $response['success'] = false;
+        $response['message'] = "Course: $alpha $number - section: $section already exists. Use another section identifier, or check records.";
+        echo json_encode($response);
+        exit();
+    }
 
-		echo json_encode($result);
-	}
-	else
-	{
-		http_response_code(422);
-	}
+
     
-}
-*/
+}	
 
 ?>

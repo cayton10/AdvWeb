@@ -7,6 +7,11 @@
     define( 'SEND_ERRORS_TO', 'cayton10@marshall.edu' ); //set email notification email address
     define( 'DISPLAY_DEBUG', true ); //display db errors?
     define( 'BASEDIR', $_SERVER['DOCUMENT_ROOT'] . "\\csg_scripts\\");
+    define( 'PATH_TO_CLASSES',  $_SERVER['DOCUMENT_ROOT'] . "/csg_scripts/classes/");
+    // PHP 7 way to do autoload
+    spl_autoload_register(function ($class) {
+    include PATH_TO_CLASSES . $class . '_class.php';
+    });
 
     // connect to database
     function connect()
