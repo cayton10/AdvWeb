@@ -37,8 +37,6 @@ class App extends Component {
     document.title = "CSG+";
     const loggedIn = localStorage.getItem('userLoggedIn');
 
-    console.log(loggedIn);
-
     if(loggedIn === 'true') {
 
       const userName = localStorage.getItem('userName');
@@ -56,9 +54,6 @@ class App extends Component {
         })
       }
     }
-
-    console.log(loggedIn); 
-
   }
 
   //Update state method and pass through registration / sign in components
