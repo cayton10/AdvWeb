@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from 'axios';
 import settings from "../constants/settings.js";
+import {AnimateOnChange} from 'react-animation';
 
 export default class AddClassInfo extends Component {
 
@@ -17,6 +18,7 @@ export default class AddClassInfo extends Component {
             courseDays: null,
             instructor: null,
             syllabusFile: null,
+            errorMessage: null,
         }
 
         //Bind functions
@@ -30,39 +32,48 @@ export default class AddClassInfo extends Component {
         this.enterInstructor = this.enterInstructor.bind(this);
         this.attachSyllabus = this.attachSyllabus.bind(this);
         this.handleAddClass = this.handleAddClass.bind(this);
+        this.removeErrorMessage = this.removeErrorMessage.bind(this);
     }
 
 
 /* --------------- FUNCTIONS TO PULL FORM INFORMATION ON EVENT -------------- */
     enterCourseTitle(e) {
+        this.removeErrorMessage();
         this.setState({courseTitle: e.target.value,});
     }
 
     enterCourseAlpha(e) {
+        this.removeErrorMessage();
         this.setState({courseAlpha: e.target.value,});
     }
 
     enterCourseNumber(e) {
+        this.removeErrorMessage();
         this.setState({courseNumber: e.target.value,});
     }
 
     enterCourseSection(e) {
+        this.removeErrorMessage();
         this.setState({courseSection: e.target.value});
     }
 
     enterCourseStart(e) {
+        this.removeErrorMessage();
         this.setState({courseStart: e.target.value,});
     }
 
     enterCourseEnd(e) {
+        this.removeErrorMessage();
         this.setState({courseEnd: e.target.value});
     }
 
     enterCourseDays(e) {
+        this.removeErrorMessage();
         this.setState({courseDays: e.target.value});
     }
 
     enterInstructor(e) {
+        this.removeErrorMessage();
         this.setState({instructor: e.target.value});
     }
 
@@ -79,6 +90,15 @@ export default class AddClassInfo extends Component {
         } else {
             field.innerHTML = "Upload Syllabus";
         }   
+    }
+
+    //Remove any error handling if people try to input data after message was shown
+    removeErrorMessage() {
+        if(this.state.errorMessage !== null) {
+            this.setState({
+                errorMessage: '',
+            });
+        }
     }
 
     handleAddClass(e) {
@@ -109,6 +129,13 @@ export default class AddClassInfo extends Component {
 
         e.preventDefault();
 
+        if(courseEnd <= courseStart) {
+            this.setState({
+                errorMessage: "Class end time cannot be before class start time. Check time entry."
+            })
+            return false;
+        }
+
         //Create formdata object so we can append the img to it
         let formData = new FormData();
 
@@ -127,8 +154,6 @@ export default class AddClassInfo extends Component {
             formData.append('file', syllabusFile, syllabusFile.name);
         }
         
-
-
         //Fire an axios POST with all of our information, take care of logic on php side
         axios.post(settings.scriptServer + '/csg_scripts/addClass.php', formData, {
             headers: {
@@ -136,7 +161,20 @@ export default class AddClassInfo extends Component {
             }
         })
             .then(result => {
-                console.log(result.data);
+
+                //If we failed to upload any of our form data, update the error state variable
+                if(result.data.success === false) {
+                    this.setState({
+                        errorMessage: result.data.message,
+                    });
+                }
+                else
+                {
+                    //Clear the form
+                    document.getElementById("addClassInfo").reset();
+                    var field = document.getElementById("fileLabel");
+                    field.innerHTML = "Upload Syllabus";
+                }
             })
             .catch(error => console.log(error))
     }
@@ -175,12 +213,12 @@ export default class AddClassInfo extends Component {
                         
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="startTimeField">Start Time</label>
-                            <input type="number" className="form-control" id="startTimeField" placeholder="Ex: 800" min="0000" max="2400" onChange={this.enterCourseStart}required/>
+                            <input type="number" className="form-control" id="startTimeField" placeholder="Ex: 800" min="0800" max="2400" onChange={this.enterCourseStart}required/>
                             <small id="timeHelp" className="form-text text-muted">Schedules use 24 hr time, Ex: 1400 = 2pm</small>
                         </div>
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="endTimeField">End Time</label>
-                            <input type="number" className="form-control" id="endTimeField" placeholder="Ex: 915" min="0000" max="2400" onChange={this.enterCourseEnd}required/>
+                            <input type="number" className="form-control" id="endTimeField" placeholder="Ex: 915" min="0850" max="2400" onChange={this.enterCourseEnd}required/>
                             <small id="timeHelp" className="form-text text-muted">Schedules use 24 hr time, Ex: 1400 = 2pm</small>
                         </div>
                     </div>
@@ -193,11 +231,21 @@ export default class AddClassInfo extends Component {
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="courseInstructorField">Instructor</label>
                             <input type="text" className="form-control" id="courseInstructorField" placeholder="Ex: Brian Morgan" onChange={this.enterInstructor} required/>
+                            <small id="nameHelp" className="form-text text-muted">Please enter instructor FirstName LastName</small>
                         </div>
                     </div>
                     <div className="form-group col-md-12 mt-3">
                         <input type="file" accept="image/jpeg, image/gif, image/png, application/pdf, .doc,.docx" className="custom-file-input" id="customFile" onChange={this.attachSyllabus}/>
                         <label id="fileLabel" className="custom-file-label" htmlFor="customFile">Upload Syllabus</label>
+                    </div>
+                    <div className='addCourseError'>
+                        <AnimateOnChange
+                        animationIn="bounceIn"
+                        animationOut="bounceOut"
+                        durationOut={500}
+                        >
+                            <h4 className='errorMssg'>{this.state.errorMessage}</h4>
+                        </AnimateOnChange>
                     </div>
                     
 

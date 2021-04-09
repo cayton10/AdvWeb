@@ -10,6 +10,8 @@ import Footer from './Footer';
 import ClassDetail from './ClassDetail';
 import LogAccess from './LogAccess';
 import AdminAccess from './AdminAccess';
+import CourseCard from './CourseCard';
+import Sections from './Sections';
 
 export {ScheduleReview, 
         ListOfCourses, 
@@ -21,4 +23,6 @@ export {ScheduleReview,
         Footer, 
         ClassDetail,
         LogAccess,
-        AdminAccess};
+        AdminAccess,
+        CourseCard,
+        Sections};

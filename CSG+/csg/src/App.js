@@ -10,7 +10,8 @@ import {ScheduleReview,
         Footer, 
         Home,
         LogAccess,
-        AdminAccess} from './components';
+        AdminAccess,
+        ClassDetail} from './components';
 import {AnimateOnChange} from 'react-animation';
 import './App.css';
 import settings from "./constants/settings.js";
@@ -37,8 +38,6 @@ class App extends Component {
     document.title = "CSG+";
     const loggedIn = localStorage.getItem('userLoggedIn');
 
-    console.log(loggedIn);
-
     if(loggedIn === 'true') {
 
       const userName = localStorage.getItem('userName');
@@ -56,9 +55,6 @@ class App extends Component {
         })
       }
     }
-
-    console.log(loggedIn); 
-
   }
 
   //Update state method and pass through registration / sign in components
@@ -159,6 +155,9 @@ class App extends Component {
               <Route
                 path="/register"
                 render={(props) => (<Register {...props} handleUser={this.handleUserChange} />)}/>
+              <Route 
+                path="/course_sections" 
+                render={(props) => (<ClassDetail {...props} />)}/>
             </Switch>
           </div>
           <Footer logStatus={this.state.loggedIn} 
