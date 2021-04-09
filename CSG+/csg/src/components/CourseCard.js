@@ -7,9 +7,13 @@ export default class CourseCard extends Component {
     
     constructor(props) {
         super(props)
+
+        this.setCourse = this.setCourse.bind(this);
     }
 
-    
+    setCourse() {
+        localStorage.setItem("courseID", this.props.course.course_id);
+    }
 
     render() {
 
@@ -23,14 +27,14 @@ export default class CourseCard extends Component {
                 </div>
                 <div className="card-body">
                     <p className="card-text mb-5">{course.course_title}</p>
-                    <Link className='btn btn-primary' 
+                    <Link className='btn btn-primary' onClick={this.setCourse}
                         to={{ //Pass the course selected as an object through the link
                             pathname: '/course_sections',
                             courseProps: {
                                 id: course.course_id,
                                 alpha: course.course_alpha,
                                 num: course.course_num,
-                            }
+                            },
                         }}>View Sections
                     </Link>
                 </div>
