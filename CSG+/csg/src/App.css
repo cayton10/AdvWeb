@@ -155,5 +155,10 @@ body {
   color: #9a9d9f
 }
 
+.addCourseError {
+  display: flex;
+  justify-content: center;
+}
+
 
 

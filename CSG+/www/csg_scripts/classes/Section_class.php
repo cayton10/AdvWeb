@@ -28,10 +28,11 @@ class Section
     public function getAllSections($courseId, $con)
     {
         $allSections = [];
-        $sql= "SELECT class_id, section_num, class_days, class_start, class_end, instructor_first_name, instructor_last_name
-        FROM class
-        LEFT JOIN instructor ON instructor.instructor_id = class.instructor_id
-        WHERE course_id = $courseId";
+        $sql= "SELECT class_id, section_num, class_days, class_start, class_end, instructor_first_name, instructor_last_name, course_syl 
+                FROM class 
+                LEFT JOIN instructor ON instructor.instructor_id = class.instructor_id 
+                LEFT JOIN course ON course.course_id = class.course_id 
+                WHERE class.course_id = $courseId";
 
         //prep stmt
         $stmt = $con->prepare($sql);
@@ -47,7 +48,7 @@ class Section
         }
         else
         {
-            $stmt->bind_result($class_id, $section_num, $class_days, $class_start, $class_end, $first, $last);
+            $stmt->bind_result($class_id, $section_num, $class_days, $class_start, $class_end, $first, $last, $syl);
             while($stmt->fetch())
             {
                 //Define index variables and assign
@@ -59,9 +60,8 @@ class Section
                                     "class_end" => $class_end,
                                     "instructor_first_name" => $first,
                                     "instructor_last_name" => $last,
-                                    "class_end" => $class_end);
-                //Report success
-                $allSections['success'] = true;
+                                    "class_end" => $class_end,
+                                    "course_syl" => $syl);
             }
         }
         return($allSections);

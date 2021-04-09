@@ -129,6 +129,13 @@ export default class AddClassInfo extends Component {
 
         e.preventDefault();
 
+        if(courseEnd <= courseStart) {
+            this.setState({
+                errorMessage: "Class end time cannot be before class start time. Check time entry."
+            })
+            return false;
+        }
+
         //Create formdata object so we can append the img to it
         let formData = new FormData();
 
@@ -160,6 +167,13 @@ export default class AddClassInfo extends Component {
                     this.setState({
                         errorMessage: result.data.message,
                     });
+                }
+                else
+                {
+                    //Clear the form
+                    document.getElementById("addClassInfo").reset();
+                    var field = document.getElementById("fileLabel");
+                    field.innerHTML = "Upload Syllabus";
                 }
             })
             .catch(error => console.log(error))
@@ -199,12 +213,12 @@ export default class AddClassInfo extends Component {
                         
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="startTimeField">Start Time</label>
-                            <input type="number" className="form-control" id="startTimeField" placeholder="Ex: 800" min="0000" max="2400" onChange={this.enterCourseStart}required/>
+                            <input type="number" className="form-control" id="startTimeField" placeholder="Ex: 800" min="0800" max="2400" onChange={this.enterCourseStart}required/>
                             <small id="timeHelp" className="form-text text-muted">Schedules use 24 hr time, Ex: 1400 = 2pm</small>
                         </div>
                         <div className="form-group col-md-6 col-lg-6" >
                             <label htmlFor="endTimeField">End Time</label>
-                            <input type="number" className="form-control" id="endTimeField" placeholder="Ex: 915" min="0000" max="2400" onChange={this.enterCourseEnd}required/>
+                            <input type="number" className="form-control" id="endTimeField" placeholder="Ex: 915" min="0850" max="2400" onChange={this.enterCourseEnd}required/>
                             <small id="timeHelp" className="form-text text-muted">Schedules use 24 hr time, Ex: 1400 = 2pm</small>
                         </div>
                     </div>

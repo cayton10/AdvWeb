@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Route, Switch, Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ClassDetail from "./ClassDetail";
 
 
 export default class CourseCard extends Component {

@@ -21,16 +21,10 @@ export default class ListOfCourses extends Component {
         //Fire axios call on page load to bring back list of all courses
         axios.post(settings.scriptServer + '/csg_scripts/getCourses.php')
             .then(result => {
-                console.log(result.data);
+ 
                 this.setState({
                     allCourses: result.data
                 });
-
-                /*
-                this.state.allCourses.map(function(object, i) {
-                    console.log("Object", object, "id ", object.course_id);
-                })
-                */
             })
             .catch(function (error) {
                 console.log(error);
@@ -65,34 +59,6 @@ export default class ListOfCourses extends Component {
                             }
                             </div>
                         </div>
-                        <table className="table mt-4" id='scheduleTable'>
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col-2">Course Title</th>
-                                    <th scope="col">Course Designation</th>
-                                    <th scope="col">View Sections</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr className='classTuple'>
-                                <th scope="row">Advanced Web Programming</th>
-                                    <td>CIT416</td>
-                                    <td><Link to="/course_sections">View</Link></td>
-                                </tr>
-                                <tr className='classTuple'>
-                                <th scope="row">Advanced Web Programming</th>
-                                    <td>CIT416</td>
-                                </tr>
-                                <tr className='classTuple'>
-                                <th scope="row">Advanced Web Programming</th>
-                                    <td>CIT416</td>
-                                </tr>
-                                <tr className='classTuple'>
-                                <th scope="row">Advanced Web Programming</th>
-                                    <td>CIT416</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </main>
             </>
             
