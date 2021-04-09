@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {Component} from "react";
+import {Redirect} from 'react-router-dom';
 import Sections from './Sections';
 import settings from "../constants/settings.js";
 
@@ -10,19 +11,24 @@ export default class ClassDetail extends Component {
         super(props)
 
         this.state = {
+            courseID: null,
             allSections: [],
             errorMessage: null,
         }
     }
 
-    componentDidMount() {
-        //Once mounted load the properties passed from the link
-        //into our course object
-        const course = this.props.location.courseProps;
+    componentWillMount() {
+
+
+        //Grab local storage for CLOWNS that want to reload page.
+        //This actually works better, and I had no idea until I broke everything
+        //reloading pages to test.
+        const courseID = localStorage.getItem("courseID");
+        console.log(courseID);
 
         //Fire our axios call to return all of the associated sections
         //with this course
-        axios.post(settings.scriptServer + '/csg_scripts/getSections.php', course.id)
+        axios.post(settings.scriptServer + '/csg_scripts/getSections.php', courseID)
             .then(result => {
                 console.log(result);
 
@@ -55,6 +61,8 @@ export default class ClassDetail extends Component {
 
     render() {
 
+        const {allSections} = this.state;
+
         return(
             <>
                 <table className="table mt-4" id='scheduleTable'>
@@ -70,7 +78,7 @@ export default class ClassDetail extends Component {
                     </thead>
                     <tbody>
                         {
-                            this.state.allSections.length > 0
+                            allSections.length > 0
                             ?
                             this.sectionList()
                             :
