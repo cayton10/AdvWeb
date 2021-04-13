@@ -18,6 +18,7 @@ export default class ClassDetail extends Component {
         }
 
         this.handleClear = this.handleClear.bind(this);
+        this.handleFavorite = this.handleFavorite.bind(this);
     }
 
     componentWillMount() {
@@ -38,6 +39,8 @@ export default class ClassDetail extends Component {
 
                 if(result.status === 200)
                 {
+                    //Apparently need to add keys here. Don't know why dev tools
+                    //is yelling at me.
                     this.setState({
                         allSections: result.data,
                         courseTitle: title
@@ -70,6 +73,10 @@ export default class ClassDetail extends Component {
 
     }
 
+    handleFavorite(e) {
+        alert("YUP");
+    }
+
     render() {
 
         const {allSections, courseTitle} = this.state;
@@ -96,7 +103,7 @@ export default class ClassDetail extends Component {
                         {
                             allSections.length > 0
                             ?
-                            <Sections sections={allSections} />
+                            <Sections sections={allSections} fav={this.handleFavorite}/>
                             :
                             "Sections for this course have yet to be added. :("
                         }
