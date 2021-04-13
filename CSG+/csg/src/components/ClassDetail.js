@@ -12,9 +12,13 @@ export default class ClassDetail extends Component {
 
         this.state = {
             courseID: null,
+            courseTitle: null,
             allSections: [],
             errorMessage: null,
+            favoriteClass: null,
         }
+
+        this.handleClear = this.handleClear.bind(this);
     }
 
     componentWillMount() {
@@ -24,7 +28,8 @@ export default class ClassDetail extends Component {
         //This actually works better, and I had no idea until I broke everything
         //reloading pages to test.
         const courseID = localStorage.getItem("courseID");
-        console.log(courseID);
+        const title = localStorage.getItem("courseTitle");
+
 
         //Fire our axios call to return all of the associated sections
         //with this course
@@ -35,7 +40,8 @@ export default class ClassDetail extends Component {
                 if(result.status === 200)
                 {
                     this.setState({
-                        allSections: result.data
+                        allSections: result.data,
+                        courseTitle: title
                     })
                     console.log(this.state.allSections);
                 }
@@ -53,19 +59,37 @@ export default class ClassDetail extends Component {
             });
     }
 
+    /**
+     * Returns a list of sections associated with the selected course
+     * as table rows
+     */
     sectionList() {
         return this.state.allSections.map(function (object, i) {
-            return <Sections key={object.class_id} section={object} />
+            return <Sections key={object.class_id.toString()} section={object} />
         })
+    }
+
+    /**
+     * Handle the user clearing the section they had favorited for this course
+     * resets radio "favorite" button, and also removes appropriate course section
+     * from database table "course schedule"
+     * @returns boolean
+     */
+    handleClear(e) {
+
     }
 
     render() {
 
-        const {allSections} = this.state;
+        const {allSections, courseTitle} = this.state;
+        const logged = localStorage.getItem("userLoggedIn");
 
         return(
             <>
-                <table className="table mt-4" id='scheduleTable'>
+            <div className="courseNameSections mt-5">
+                <h4 id="courseTitleSections">{courseTitle} Sections:</h4>
+            </div>
+                <table className="table mt-3" id='scheduleTable'>
                     <thead className="thead-dark">
                         <tr>
                             <th scope="col">Section</th>
@@ -74,6 +98,7 @@ export default class ClassDetail extends Component {
                             <th scope="col">End</th>
                             <th scope="col">Instructor</th>
                             <th scope="col">Syllabus</th>
+                            <th scope="col">Favorite</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,6 +111,16 @@ export default class ClassDetail extends Component {
                         }
                     </tbody>
                 </table>
+                {
+                    logged === "true" ?
+                    <div className="clearSectionsButtonHouse">
+                        <button className='btn btn-danger' onClick={this.handleClear}>Clear Section</button>
+                    </div>
+                    :
+                    ''
+                }
+                
+                
             </>
         )
     }
