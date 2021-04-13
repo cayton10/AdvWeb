@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, {Component} from "react";
-import {Redirect} from 'react-router-dom';
 import Sections from './Sections';
 import settings from "../constants/settings.js";
 
@@ -19,6 +18,7 @@ export default class ClassDetail extends Component {
         }
 
         this.handleClear = this.handleClear.bind(this);
+        this.handleFavorite = this.handleFavorite.bind(this);
     }
 
     componentWillMount() {
@@ -39,6 +39,8 @@ export default class ClassDetail extends Component {
 
                 if(result.status === 200)
                 {
+                    //Apparently need to add keys here. Don't know why dev tools
+                    //is yelling at me.
                     this.setState({
                         allSections: result.data,
                         courseTitle: title
@@ -60,23 +62,19 @@ export default class ClassDetail extends Component {
     }
 
     /**
-     * Returns a list of sections associated with the selected course
-     * as table rows
-     */
-    sectionList() {
-        return this.state.allSections.map(function (object, i) {
-            return <Sections key={object.class_id.toString()} section={object} />
-        })
-    }
-
-    /**
      * Handle the user clearing the section they had favorited for this course
      * resets radio "favorite" button, and also removes appropriate course section
      * from database table "course schedule"
      * @returns boolean
      */
     handleClear(e) {
+        alert("PUSHED");
+        var radList = document.getElementsByName('favSection');
 
+    }
+
+    handleFavorite(e) {
+        alert(e.target.value);
     }
 
     render() {
@@ -105,9 +103,9 @@ export default class ClassDetail extends Component {
                         {
                             allSections.length > 0
                             ?
-                            this.sectionList()
+                            <Sections sections={allSections} fav={this.handleFavorite}/>
                             :
-                            "No sections for this course... yet."
+                            "Sections for this course have yet to be added. :("
                         }
                     </tbody>
                 </table>
