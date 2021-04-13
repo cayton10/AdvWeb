@@ -1,10 +1,9 @@
 # Course Schedule Generator +
 
-## Adding / Registering Users
-After having used jQuery for the last year, I tried to find some solutions for maniplulating DOM elements and adding transitions to things like coloring input fields if there are errors. I figured out how to do some of these things with CSS keyframes and vanilla JS. I also used [react-animation](https://nearform.github.io/react-animation/) module for giving slick display to updating error messaging.
-
 ### Getting This Project to Run
 
+###### <strong> Mac users should not have any issues spinning up the provided database and accompanying data. <em>Windows</em> users, however, will have problems. If you run a Windows machine, you'll have to add the SQL to build the database up on your end after you clone the project. Instructions below:
+<hr>
 - You'll have to clone the repo, and build the container up from the docker-compose file in the CSG+ directory
 - Once that's done, enter 'localhost' in your web browser.
 - Open phpMyAdmin
@@ -12,6 +11,21 @@ After having used jQuery for the last year, I tried to find some solutions for m
 - You may have to create a user with permissions to access the csgdb database. DB_USER: csg_user, DB_PASS: csg_Pa$$word
 - The above credentials are used in the php scripts for database access
 - If you have any trouble contact me.
+<hr>
+
+
+
+
+## Adding Courses as Admin - Viewing Courses / Sections - 4.8.2021
+To be honest, I didn't take very good notes when I was working through this part of the project. I'll circle back and add some documentation here either when the semester's over or if I finish the next project early.
+
+
+## Adding / Registering Users - 3.30.2021
+After having used jQuery for the last year, I tried to find some solutions for maniplulating DOM elements and adding transitions to things like coloring input fields if there are errors. I figured out how to do some of these things with CSS keyframes and vanilla JS. I also used [react-animation](https://nearform.github.io/react-animation/) module for giving slick display to updating error messaging.
+
+
+## Setup/Bootstrap Theme
+This app was built entirely by myself using Bootstrap v.4. The headings below outline my thought process and work on the requirements to finish this part of the project.
 
 ### Using State
 I tried refactoring as much code as I could before this was due. After really getting into the guts of this framework I really started to understand how to update state and use it to my advantage. 

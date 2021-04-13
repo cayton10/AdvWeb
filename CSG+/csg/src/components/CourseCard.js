@@ -15,6 +15,7 @@ export default class CourseCard extends Component {
     //state on page refresh, we need to store a value to see on section view.
     setCourse() {
         localStorage.setItem("courseID", this.props.course.course_id);
+        localStorage.setItem("courseTitle", this.props.course.course_title);
     }
 
     render() {
