@@ -46,12 +46,8 @@ export default class Sections extends Component {
     /*                            PRINT COURSE SECTIONS                           */
     /* -------------------------------------------------------------------------- */
     /**
-     * Takes all sections supplied from an axios call for a course. Prints each section
-     * in a table row to be returned to parent component. Was initially done in parent 
-     * component - "ClassDetail". Can't pass methods through parent to child that way
-     * so here we are.
-     * @param {sections object from csgdb, parent method} sections 
-     * @returns ES6 markup
+    /**Parent method used to update state in parent
+     * Takes @param(object of all sections related to course, parent method)
      */
     printSections(sections, favorite) {
 

@@ -74,7 +74,7 @@ export default class ClassDetail extends Component {
     }
 
     handleFavorite(e) {
-        alert("YUP");
+        alert(e.target.value);
     }
 
     render() {
