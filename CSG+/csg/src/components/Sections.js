@@ -19,28 +19,11 @@ export default class Sections extends Component {
 
         this.setState({
             courseSections: this.props.sections,
+            //Our handler for setting state of section in parent
             favorite: this.props.fav,
             logged: localStorage.getItem("userLoggedIn"),
         })
     }
-
-    /*addFavorite(e) {
-
-        //Create an object package to send to script
-        const payload = {
-            userID: localStorage.getItem("user_id"),
-            section: e.target.value,
-        }
-
-        //Place axios call here and update as appropriate:
-        axios.post(settings.scriptServer + "/csg_scripts/addToSchedule.php", payload)
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }*/
 
     /* -------------------------------------------------------------------------- */
     /*                            PRINT COURSE SECTIONS                           */
@@ -50,8 +33,6 @@ export default class Sections extends Component {
      * Takes @param(object of all sections related to course, parent method)
      */
     printSections(sections, favorite) {
-
-        console.log(favorite);
         
         return sections.map(function (i, j) {
             //Set syllabi path
@@ -60,9 +41,6 @@ export default class Sections extends Component {
 
             return (
                     <>
-                    {
-                        console.log(i.class_id)
-                    }
                         <tr key={i.class_id} className='classTuple'>
                         <th scope="row">{i.section_num}</th>
                             <td>{i.class_days}</td>

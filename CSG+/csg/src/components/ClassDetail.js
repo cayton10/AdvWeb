@@ -10,11 +10,12 @@ export default class ClassDetail extends Component {
         super(props)
 
         this.state = {
-            courseID: null,
+            course_id: null,
             courseTitle: null,
             allSections: [],
             errorMessage: null,
             favoriteClass: null,
+            userID: null,
         }
 
         this.handleClear = this.handleClear.bind(this);
@@ -39,9 +40,8 @@ export default class ClassDetail extends Component {
 
                 if(result.status === 200)
                 {
-                    //Apparently need to add keys here. Don't know why dev tools
-                    //is yelling at me.
                     this.setState({
+                        course_id: courseID,
                         allSections: result.data,
                         courseTitle: title
                     })
@@ -73,8 +73,45 @@ export default class ClassDetail extends Component {
 
     }
 
+    /**
+     * Simply handles the radio onChange event in child component
+     * updates state of favorite class and stores user id. After setting
+     * state variables, calls updateSchedule method
+     * @param {event} e 
+     */
     handleFavorite(e) {
-        alert(e.target.value);
+
+        //Update state so we can fire our axios call
+        return this.setState({
+            favoriteClass: e.target.value,
+            userID: localStorage.getItem("user_id"),
+        }, () =>
+            //callback handler 
+            this.updateSchedule());
+    }
+
+    /**
+     * updateSchedule - called from handleFavorite. Loads state variables
+     * into a JS object and sends to php script via axios to update user's
+     * class schedule
+     */
+    updateSchedule() {
+
+        //Create the object to send to script
+        let schedObj = {
+            course: this.state.course_id,
+            user: this.state.userID,
+            favorite: this.state.favoriteClass,
+        }
+
+        //Fire an axios call to update the user's schedule with new favorite
+        axios.post(settings.scriptServer + '/csg_scripts/addToSchedule.php', schedObj)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            }) 
     }
 
     render() {
@@ -117,8 +154,6 @@ export default class ClassDetail extends Component {
                     :
                     ''
                 }
-                
-                
             </>
         )
     }
