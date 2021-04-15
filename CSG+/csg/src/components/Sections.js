@@ -19,28 +19,12 @@ export default class Sections extends Component {
 
         this.setState({
             courseSections: this.props.sections,
+            //Our handler for setting state of section in parent
             favorite: this.props.fav,
+            section: this.props.section,
             logged: localStorage.getItem("userLoggedIn"),
         })
     }
-
-    /*addFavorite(e) {
-
-        //Create an object package to send to script
-        const payload = {
-            userID: localStorage.getItem("user_id"),
-            section: e.target.value,
-        }
-
-        //Place axios call here and update as appropriate:
-        axios.post(settings.scriptServer + "/csg_scripts/addToSchedule.php", payload)
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }*/
 
     /* -------------------------------------------------------------------------- */
     /*                            PRINT COURSE SECTIONS                           */
@@ -50,8 +34,6 @@ export default class Sections extends Component {
      * Takes @param(object of all sections related to course, parent method)
      */
     printSections(sections, favorite) {
-
-        console.log(favorite);
         
         return sections.map(function (i, j) {
             //Set syllabi path
@@ -60,9 +42,6 @@ export default class Sections extends Component {
 
             return (
                     <>
-                    {
-                        console.log(i.class_id)
-                    }
                         <tr key={i.class_id} className='classTuple'>
                         <th scope="row">{i.section_num}</th>
                             <td>{i.class_days}</td>
@@ -80,7 +59,8 @@ export default class Sections extends Component {
                             {
                                 //If local storage for user log in isn't there, don't show radio
                                 logged === "true" ?
-                                <td><input className="sectionRadio" type="radio" name="favSection" value={i.class_id} onChange={favorite}/></td>
+                                <td><input className="sectionRadio" type="radio" name="favSection" value={i.class_id} 
+                                    onChange={favorite} /></td>
                                 :
                                 <td><Link to="/login">Log in</Link></td>
                             }
