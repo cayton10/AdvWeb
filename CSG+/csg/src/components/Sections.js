@@ -21,6 +21,7 @@ export default class Sections extends Component {
             courseSections: this.props.sections,
             //Our handler for setting state of section in parent
             favorite: this.props.fav,
+            section: this.props.section,
             logged: localStorage.getItem("userLoggedIn"),
         })
     }
@@ -58,7 +59,8 @@ export default class Sections extends Component {
                             {
                                 //If local storage for user log in isn't there, don't show radio
                                 logged === "true" ?
-                                <td><input className="sectionRadio" type="radio" name="favSection" value={i.class_id} onChange={favorite}/></td>
+                                <td><input className="sectionRadio" type="radio" name="favSection" value={i.class_id} 
+                                    onChange={favorite} /></td>
                                 :
                                 <td><Link to="/login">Log in</Link></td>
                             }

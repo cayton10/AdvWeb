@@ -24,7 +24,6 @@ export default class ClassDetail extends Component {
 
     componentWillMount() {
 
-
         //Grab local storage for CLOWNS that want to reload page.
         //This actually works better, and I had no idea until I broke everything
         //reloading pages to test.
@@ -36,8 +35,6 @@ export default class ClassDetail extends Component {
         //with this course
         axios.post(settings.scriptServer + '/csg_scripts/getSections.php', courseID)
             .then(result => {
-                console.log(result);
-
                 if(result.status === 200)
                 {
                     this.setState({
@@ -45,7 +42,6 @@ export default class ClassDetail extends Component {
                         allSections: result.data,
                         courseTitle: title
                     })
-                    console.log(this.state.allSections);
                 }
                     
                 if(result.data.success === false)
@@ -68,9 +64,41 @@ export default class ClassDetail extends Component {
      * @returns boolean
      */
     handleClear(e) {
-        alert("PUSHED");
-        var radList = document.getElementsByName('favSection');
 
+        //Since we don't know which is checked, just reset them all
+        let radios = document.getElementsByClassName('sectionRadio');
+
+        //Iterate through radios
+        for(let i = 0; i < radios.length; i++)
+        {
+            //If a radio is checked, uncheck it
+            if(radios[i].checked === true) {
+
+                //Create an object to send to script
+                const sectionObj = {
+                    user: this.state.userID,
+                    section: radios[i].value,
+                }
+                //Fire an axios call to remove this section from the user's schedule
+                axios.post(settings.scriptServer + "/csg_scripts/removeSection.php", sectionObj)
+                    .then(result => {
+                        console.log(result)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                radios[i].checked = false;
+            }
+        }
+
+
+
+
+
+
+        this.setState({
+            favoriteClass: null,
+        });
     }
 
     /**
@@ -116,7 +144,7 @@ export default class ClassDetail extends Component {
 
     render() {
 
-        const {allSections, courseTitle} = this.state;
+        const {allSections, courseTitle, favoriteClass} = this.state;
         const logged = localStorage.getItem("userLoggedIn");
 
         return(
@@ -140,7 +168,7 @@ export default class ClassDetail extends Component {
                         {
                             allSections.length > 0
                             ?
-                            <Sections sections={allSections} fav={this.handleFavorite}/>
+                            <Sections sections={allSections} fav={this.handleFavorite} />
                             :
                             "Sections for this course have yet to be added. :("
                         }

@@ -82,6 +82,10 @@ class UserSchedule
         return $response;
     }
 
+    /**
+     * updateSchedule(int, int, mysqli_object)
+     * Updates user schedule with new class id for existing course
+     */
     public function updateSchedule($schedule_id, $class_id, $con)
     {
         $response = [];
@@ -101,6 +105,31 @@ class UserSchedule
             $response['message'] = "Failed to update schedule";
         }
         return($response);
+    }
+
+    /**
+     * removeClass(int, int, mysqli_object)
+     * Removes class section from users schedule
+     */
+    public function removeClass($class_id, $user_id, $con)
+    {
+        $response = [];
+
+        $sql = "DELETE FROM `schedule`
+                WHERE `class_id` = '$class_id' AND `user_id` = '$user_id'";
+
+        if(mysqli_query($con, $sql))
+        {
+            $response['success'] = true;
+            $response['message'] = "Section removed from schedule.";
+        }
+        else
+        {
+            $response['success'] = false;
+            $response['message'] = "Section could not be removed from schedule.";
+        }
+
+        return $response;
     }
 }
 ?>
