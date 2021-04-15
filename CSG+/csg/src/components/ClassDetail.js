@@ -82,20 +82,17 @@ export default class ClassDetail extends Component {
                 //Fire an axios call to remove this section from the user's schedule
                 axios.post(settings.scriptServer + "/csg_scripts/removeSection.php", sectionObj)
                     .then(result => {
-                        console.log(result)
+                        console.log(result.data.success);
+                        console.log(result.data.message);
                     })
                     .catch(error => {
                         console.log(error)
                     })
+                //Uncheck the radio button
                 radios[i].checked = false;
             }
         }
-
-
-
-
-
-
+        //Reset state back to null for favorite class
         this.setState({
             favoriteClass: null,
         });
@@ -135,7 +132,8 @@ export default class ClassDetail extends Component {
         //Fire an axios call to update the user's schedule with new favorite
         axios.post(settings.scriptServer + '/csg_scripts/addToSchedule.php', schedObj)
             .then(result => {
-                console.log(result);
+                console.log(result.data.success)
+                console.log(result.data.message)
             })
             .catch(error => {
                 console.log(error);
@@ -144,7 +142,7 @@ export default class ClassDetail extends Component {
 
     render() {
 
-        const {allSections, courseTitle, favoriteClass} = this.state;
+        const {allSections, courseTitle} = this.state;
         const logged = localStorage.getItem("userLoggedIn");
 
         return(

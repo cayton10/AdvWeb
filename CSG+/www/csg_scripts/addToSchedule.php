@@ -9,7 +9,7 @@ $request = json_decode(file_get_contents('php://input'));
 
 if(isset($request) && !empty($request))
 {
-    print_r($request);
+    //print_r($request);
 
     $response = [];
 
