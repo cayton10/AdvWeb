@@ -9,8 +9,6 @@ $request = json_decode(file_get_contents('php://input'));
 
 if(isset($request) && !empty($request))
 {
-    //print_r($request);
-
     $response = [];
 
     //Sanitize
@@ -21,13 +19,12 @@ if(isset($request) && !empty($request))
     $schedule = new UserSchedule();
 
     //Check for duplicate course
-    $duplicate = $schedule->checkCourseDup($userID, $courseID, $classID, $con);
+    $duplicate = $schedule->checkCourseDup($userID, $courseID, $con);
+
     //Update or add course logic
     if($duplicate == 0)
     {
-        echo json_encode("Not a duplicate");
         $addSection = $schedule->addClassToSchedule($classID, $userID, $con);
-
         echo json_encode($addSection);
     }
     //Logic for schedule add / update

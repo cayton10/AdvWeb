@@ -27,10 +27,5 @@
         $response['message'] = "No request set";
         echo json_encode($response);
     }
-    
-
-    
-
-    
 
 ?>

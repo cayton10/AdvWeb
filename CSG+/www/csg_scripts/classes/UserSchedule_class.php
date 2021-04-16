@@ -12,11 +12,72 @@ class UserSchedule
     }
 
     /**
+     * getSchedule(int, mysqli_obj)
+     * Takes user id argument and returns all class / course information
+     * associated with user's favorited course sections
+     */
+    public function getUserSchedule($user_id, $con)
+    {
+        //Construct statement
+        $sql = "SELECT schedule_id,
+                        course_title, 
+                        course_alpha,   
+                        course_num,
+                        instructor_first_name,
+                        instructor_last_name,
+                        class_start,
+                        class_end,
+                        class_days,
+                        course_syl,
+                        section_num 
+
+                FROM schedule
+                LEFT JOIN class ON class.class_id = schedule.class_id
+                LEFT JOIN course ON course.course_id = class.course_id
+                LEFT JOIN instructor ON instructor.instructor_id = class.instructor_id
+                WHERE user_id = $user_id";
+        
+        $stmt = $con->prepare($sql);
+        $stmt->execute();
+        $stmt->store_result();
+
+        //Bind the results and return them
+        if($stmt->num_rows == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            $stmt->bind_result($schedule_id, $course_title, $course_alpha, $course_num, $instructor_first_name, $instructor_last_name, $class_start, $class_end, $class_days, $course_syl, $section_num);
+            while($stmt->fetch())
+            {
+                //Dump all bound vars into schedule array review for JSON output
+                $schedule[] = array(
+                    "schedule_id" => $schedule_id,
+                    "course_title" => $course_title,
+                    "course_alpha" => $course_alpha,
+                    "course_num" => $course_num,
+                    "instructor_first_name" => $instructor_first_name,
+                    "instructor_last_name" => $instructor_last_name,
+                    "class_start" => $class_start,
+                    "class_end" => $class_end,
+                    "class_days" => $class_days,
+                    "course_syl" => $course_syl,
+                    "section_num" => $section_num
+                );
+            }
+            //Return the array back to the script that called it
+            return $schedule;
+        }
+
+    }
+
+    /**
      * Check to make sure the user doesn't already have a schedule containing
      * the course they just "favorited"
      * Returns bool
      */
-    public function checkCourseDup($user_id, $course_id, $class_id, $con)
+    public function checkCourseDup($user_id, $course_id, $con)
     {
         //Construct statement
         $sql = "SELECT schedule_id
