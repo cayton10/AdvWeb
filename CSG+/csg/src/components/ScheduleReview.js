@@ -1,6 +1,58 @@
+import axios from "axios";
 import React, {Component} from "react";
+import Schedule from "./Schedule";
+import settings from "../constants/settings.js";
 
 export default class ScheduleReview extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            userSchedule: [],
+            userID: null,
+        }
+
+    }
+
+    componentDidMount() {
+
+        //Make sure we have a user logged in
+        if(localStorage.getItem("user_id") != null) {
+            //Update state
+            this.setState({
+                userID: localStorage.getItem("user_id"),
+            }, () =>
+                //Fire the axios call
+                axios.post(settings.scriptServer + "/csg_scripts/getUserSchedule.php", this.state.userID)
+                
+                    .then(result => {
+                        console.log(result);
+
+                        if(result.status == 200) {
+                            this.setState({
+                                userSchedule: result.data,
+                                
+                            })
+                            console.log(this.userSchedule);
+                        }
+                        
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    }))
+        }
+        
+        
+    }
+
+    //Line out a function that will print all my section rows for me. Thanks, Scarlett
+    userSchedule() {
+        return this.state.userSchedule.map(function(object, i) {
+            return <Schedule obj={object} key={i} />;
+        })
+    }
+
 
     render() {
         return (
@@ -22,42 +74,13 @@ export default class ScheduleReview extends Component {
                     </tr>
                 </thead>
                     <tbody>
-                        <tr id='classTuple'>
-                        <th scope="row">Advanced Web Programming</th>
-                            <td>CIT416</td>
-                            <td>101</td>
-                            <td>Brian Morgan</td>
-                            <td>800-915</td>
-                            <td>TR</td>
-                            <td>Link Here</td>
-                        </tr>
-                        <tr id='classTuple'>
-                        <th scope="row">Advanced Web Programming</th>
-                            <td>CIT416</td>
-                            <td>101</td>
-                            <td>Brian Morgan</td>
-                            <td>800-915</td>
-                            <td>TR</td>
-                            <td>Link Here</td>
-                        </tr>
-                        <tr id='classTuple'>
-                        <th scope="row">Advanced Web Programming</th>
-                            <td>CIT416</td>
-                            <td>101</td>
-                            <td>Brian Morgan</td>
-                            <td>800-915</td>
-                            <td>TR</td>
-                            <td>Link Here</td>
-                        </tr>
-                        <tr id='classTuple'>
-                        <th scope="row">Advanced Web Programming</th>
-                            <td>CIT416</td>
-                            <td>101</td>
-                            <td>Brian Morgan</td>
-                            <td>800-915</td>
-                            <td>TR</td>
-                            <td>Link Here</td>
-                        </tr>
+                        {
+                            this.userSchedule.length < 1
+                            ?
+                            this.userSchedule()
+                            :
+                            "No schedule, mate ;) better build one soon!"
+                        }
                     </tbody>
                 </table>
                 </main>

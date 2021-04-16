@@ -84,12 +84,12 @@ export default class ClassDetail extends Component {
                     .then(result => {
                         console.log(result.data.success);
                         console.log(result.data.message);
+                        //Uncheck the radio button
+                        radios[i].checked = false;
                     })
                     .catch(error => {
                         console.log(error)
                     })
-                //Uncheck the radio button
-                radios[i].checked = false;
             }
         }
         //Reset state back to null for favorite class
