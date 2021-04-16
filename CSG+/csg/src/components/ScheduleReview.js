@@ -42,6 +42,9 @@ export default class ScheduleReview extends Component {
                         console.log(error);
                     }))
         }
+        else {
+            this.userSchedule = 0;
+        }
         
         
     }
@@ -75,7 +78,7 @@ export default class ScheduleReview extends Component {
                 </thead>
                     <tbody>
                         {
-                            this.userSchedule.length < 1
+                            this.userSchedule.length > 1
                             ?
                             this.userSchedule()
                             :
