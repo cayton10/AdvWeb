@@ -1,9 +1,11 @@
 # Course Schedule Generator +
 
-### Getting This Project to Run
+## Getting This Project to Run
 
-###### <strong> Mac users should not have any issues spinning up the provided database and accompanying data. <em>Windows</em> users, however, will have problems. If you run a Windows machine, you'll have to add the SQL to build the database up on your end after you clone the project. Instructions below:
+##### <strong> Mac users should not have any issues spinning up the provided database and accompanying data. <em>Windows</em> users, however, will have problems. If you run a Windows machine, you'll have to add the SQL to build the database up on your end after you clone the project. Instructions below:
 <hr>
+
+#### For Windows Users:
 - You'll have to clone the repo, and build the container up from the docker-compose file in the CSG+ directory
 - Once that's done, enter 'localhost' in your web browser.
 - Open phpMyAdmin
@@ -13,7 +15,8 @@
 - If you have any trouble contact me.
 <hr>
 
-
+## Favoriting Sections / Viewing Schedules
+There were a lot of things I learned here. Too many to count. Let's have a cup of coffee and talk about it.
 
 
 ## Adding Courses as Admin - Viewing Courses / Sections - 4.8.2021
