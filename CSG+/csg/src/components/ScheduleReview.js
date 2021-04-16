@@ -32,7 +32,6 @@ export default class ScheduleReview extends Component {
                         if(result.status == 200) {
                             this.setState({
                                 userSchedule: result.data,
-                                
                             })
                             console.log(this.userSchedule);
                         }
@@ -43,7 +42,9 @@ export default class ScheduleReview extends Component {
                     }))
         }
         else {
-            this.userSchedule = 0;
+            this.setState({
+                userSchedule: 0,
+            })
         }
         
         
@@ -58,6 +59,9 @@ export default class ScheduleReview extends Component {
 
 
     render() {
+
+        const {userSchedule} = this.state;
+
         return (
             <>
             <main id='mainContent'>
@@ -78,7 +82,7 @@ export default class ScheduleReview extends Component {
                 </thead>
                     <tbody>
                         {
-                            this.userSchedule.length > 1
+                            userSchedule.length > 0
                             ?
                             this.userSchedule()
                             :
