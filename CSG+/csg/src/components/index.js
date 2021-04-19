@@ -11,7 +11,8 @@ import ClassDetail from './ClassDetail';
 import LogAccess from './LogAccess';
 import AdminAccess from './AdminAccess';
 import CourseCard from './CourseCard';
-import Sections from './Sections';
+import Sections from './Sections'
+import SelectOptions from './SelectOptions';
 
 export {ScheduleReview, 
         ListOfCourses, 
@@ -25,4 +26,5 @@ export {ScheduleReview,
         LogAccess,
         AdminAccess,
         CourseCard,
-        Sections};
+        Sections,
+        SelectOptions};
