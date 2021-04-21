@@ -3,6 +3,7 @@ import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import settings from "../constants/settings.js";
 import SelectOptions from "./SelectOptions";
+import AdminTable from "./AdminTable";
 
 export default class Admin extends Component {
 
@@ -14,9 +15,11 @@ export default class Admin extends Component {
             userList: [],
             userName: '',
             userSchedule: [],
+            section: null,
         }
 
         this.handleUserSelect = this.handleUserSelect.bind(this);
+        this.handleSectionRemove = this.handleSectionRemove.bind(this);
     }
 
     componentDidMount() {
@@ -26,7 +29,7 @@ export default class Admin extends Component {
             .then(result => {
                 
                 //Result branching
-                result.status == 200 ? this.setState({
+                result.status === 200 ? this.setState({
                     userList: result.data,
                 })
                 :
@@ -36,7 +39,6 @@ export default class Admin extends Component {
             .catch(error => {
                 console.log(error);
             })
-        
     }
 
     /**
@@ -59,28 +61,40 @@ export default class Admin extends Component {
      */
     handleUserSelect(e) {
 
-        let initName = e.target[e.target.selectedIndex].text;
-
-
         this.setState({
             userID: e.target.value,
-            userName: e.target[e.target.selectedIndex].text;
+            userName: e.target[e.target.selectedIndex].text,
         }, () => {
-            console.log(this.state.userID);
+
 
             axios.post(settings.scriptServer + "/csg_scripts/getUserSchedule.php", this.state.userID)
                 .then(result => {
-                    console.log(result.data)
+
+                    if(result.status === 200) {
+                        this.setState({
+                            userSchedule: result.data,
+                        })
+                    }
                 })
                 .catch(error => {
                     console.log(error)
                 })
         })
-
     }
 
+    handleSectionRemove(e) {
+        return(
+            this.setState({
+                section: e.target.value,
+            },
+                console.log(e.target.value)
+            )
+        )
+    }
+
+
     render() {
-        const {userList} = this.state;
+        const {userList, userSchedule} = this.state;
         return (
             <>
             <form className="form-group boogerSelectDiv" >
@@ -96,7 +110,15 @@ export default class Admin extends Component {
                     }
                 </select>
             </form>
-            
+            {
+                userSchedule.length > 0 ?
+                <AdminTable schedule={userSchedule} method={this.handleSectionRemove} />
+                :
+                ''
+            }
+            {
+                console.log(userSchedule)
+            }
             <div><p>If time allows, will add functionality to administer user accounts here</p></div>
             </>
         )
