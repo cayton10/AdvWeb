@@ -12,6 +12,7 @@ export default class Admin extends Component {
         //Store the student list as a state variable
         this.state = {
             userList: [],
+            userName: '',
             userSchedule: [],
         }
 
@@ -38,14 +39,43 @@ export default class Admin extends Component {
         
     }
 
-    //TODO: Put method documentation comments into this component
+    /**
+     * userList() takes no parameters.
+     * Maps state array to return a list of components which is comprised
+     * of all user names within the database.
+     * @returns COMPONENT
+     */
     userList() {
         return this.state.userList.map(function(object, i) {
             return <SelectOptions obj={object} key={i} />;
         })
     }
 
+    /**
+     * handleUserSelect(event) - Handles on change event and updates state of
+     * userID. Fires axios call to return an array of sections / courses for a 
+     * user's schedule
+     * @param {onChange event} e 
+     */
     handleUserSelect(e) {
+
+        let initName = e.target[e.target.selectedIndex].text;
+
+
+        this.setState({
+            userID: e.target.value,
+            userName: e.target[e.target.selectedIndex].text;
+        }, () => {
+            console.log(this.state.userID);
+
+            axios.post(settings.scriptServer + "/csg_scripts/getUserSchedule.php", this.state.userID)
+                .then(result => {
+                    console.log(result.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        })
 
     }
 

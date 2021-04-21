@@ -43,11 +43,9 @@ export default class ScheduleReview extends Component {
         }
         else {
             this.setState({
-                userSchedule: 0,
+                userSchedule: [],
             })
         }
-        
-        
     }
 
     //Line out a function that will print all my section rows for me. Thanks, Scarlett

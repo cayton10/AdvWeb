@@ -74,12 +74,9 @@ export default class Login extends Component {
                 //If 200 "OK" set loggedIn state variable to redirect user and set storage
                 if(result.data !== 200) {
 
-                    console.log(result);
-
                     if(result.data == null) {
 
                         this.showError();
-
                         return;
                     }
 
