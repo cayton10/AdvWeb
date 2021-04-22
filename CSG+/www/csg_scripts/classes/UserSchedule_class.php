@@ -192,5 +192,31 @@ class UserSchedule
 
         return $response;
     }
+
+    /**
+     * removeCourse(int, int, mysqli_object)
+     * Only writing this because polymorphism - retroactively broke my app.
+     * Will fix soon and nix this needless method
+     */
+    public function removeCourse($user_id, $schedule_id, $con)
+    {
+        $response = [];
+
+        $sql = "DELETE FROM `schedule`
+                WHERE `schedule_id` = '$schedule_id' AND `user_id` = '$user_id'";
+
+        if(mysqli_query($con, $sql))
+        {
+            $response['success'] = true;
+            $response['message'] = "Course section deleted from user schedule";
+        }
+        else
+        {
+            $response['success'] = false;
+            $response['message'] = "Could not delete course from user schedule";
+        }
+
+        return $response;
+    }
 }
 ?>
