@@ -27,13 +27,11 @@ export default class ScheduleReview extends Component {
                 axios.post(settings.scriptServer + "/csg_scripts/getUserSchedule.php", this.state.userID)
                 
                     .then(result => {
-                        console.log(result);
 
                         if(result.status == 200) {
                             this.setState({
                                 userSchedule: result.data,
                             })
-                            console.log(this.userSchedule);
                         }
                         
                     })
@@ -43,11 +41,9 @@ export default class ScheduleReview extends Component {
         }
         else {
             this.setState({
-                userSchedule: 0,
+                userSchedule: [],
             })
         }
-        
-        
     }
 
     //Line out a function that will print all my section rows for me. Thanks, Scarlett
