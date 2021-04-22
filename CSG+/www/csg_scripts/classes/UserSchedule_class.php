@@ -35,7 +35,8 @@ class UserSchedule
                 LEFT JOIN class ON class.class_id = schedule.class_id
                 LEFT JOIN course ON course.course_id = class.course_id
                 LEFT JOIN instructor ON instructor.instructor_id = class.instructor_id
-                WHERE user_id = $user_id";
+                WHERE user_id = $user_id
+                ORDER BY class_start, class_days";
         
         $stmt = $con->prepare($sql);
         $stmt->execute();

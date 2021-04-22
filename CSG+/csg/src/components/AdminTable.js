@@ -44,9 +44,6 @@ export default class AdminTable extends Component {
                             this.printSechedule():
                             ""
                         }
-                        {
-                            console.log(this.props.schedule)
-                        }
                     </tbody>
                 </table>
         )

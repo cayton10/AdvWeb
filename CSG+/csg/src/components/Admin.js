@@ -151,10 +151,6 @@ export default class Admin extends Component {
                 :
                 ''
             }
-            {
-                console.log(userSchedule)
-            }
-            <div><p>If time allows, will add functionality to administer user accounts here</p></div>
             </>
         )
     }

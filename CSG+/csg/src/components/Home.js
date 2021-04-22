@@ -9,32 +9,44 @@ export default class Home extends Component {
       <main id='mainContent'>
         <div className='row'>
           <div className='col-12'>
-            <div className='row'>
+            <div className='row mt-5'>
 
               <div className='col-sm-6 col-md-4'>
-                <div className='imgPlace img-fluid'>
-                  <img src={settings.path + 'logo512.png'} className='placeHolder'/>
+                <div className='textHeading'>
+                  <h3>Course Library</h3>
                 </div>
                 <div className='textPlace'>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget dolor morbi non arcu risus quis varius quam quisque. Lorem ipsum dolor sit amet consectetur adipiscing. Tortor condimentum lacinia quis vel eros. Morbi tristique senectus et netus et malesuada fames ac. Nec ullamcorper sit amet risus. Viverra tellus in hac habitasse platea. Egestas purus viverra accumsan in nisl. Ut tellus elementum sagittis vitae. Proin libero nunc consequat interdum varius sit. Ultricies integer quis auctor elit sed vulputate. Fermentum posuere urna nec tincidunt. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Quisque sagittis purus sit amet volutpat. Ultrices tincidunt arcu non sodales neque sodales. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. Convallis posuere morbi leo urna molestie.</p>
-                </div>
-
-              </div>
-              <div className='col-sm-6 col-md-4'>
-                <div className='imgPlace img-fluid'>
-                  <img src={settings.path + 'logo512.png'} className='placeHolder'/>
-                </div>
-                <div className='textPlace'>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget dolor morbi non arcu risus quis varius quam quisque. Lorem ipsum dolor sit amet consectetur adipiscing. Tortor condimentum lacinia quis vel eros. Morbi tristique senectus et netus et malesuada fames ac. Nec ullamcorper sit amet risus. Viverra tellus in hac habitasse platea. Egestas purus viverra accumsan in nisl. Ut tellus elementum sagittis vitae. Proin libero nunc consequat interdum varius sit. Ultricies integer quis auctor elit sed vulputate. Fermentum posuere urna nec tincidunt. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Quisque sagittis purus sit amet volutpat. Ultrices tincidunt arcu non sodales neque sodales. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. Convallis posuere morbi leo urna molestie.</p>
+                  <ul>
+                    <li>Access courses tab to view</li>
+                    <li>Course list accessible to everyone</li>
+                    <li>Organized by low to high difficulty</li>
+                  </ul>
                 </div>
 
               </div>
               <div className='col-sm-6 col-md-4'>
-                <div className='imgPlace img-fluid'>
-                  <img src={settings.path + 'logo512.png'} className='placeHolder'/>
+                <div className='textHeading'>
+                  <h3>Course Sections</h3>
                 </div>
                 <div className='textPlace'>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget dolor morbi non arcu risus quis varius quam quisque. Lorem ipsum dolor sit amet consectetur adipiscing. Tortor condimentum lacinia quis vel eros. Morbi tristique senectus et netus et malesuada fames ac. Nec ullamcorper sit amet risus. Viverra tellus in hac habitasse platea. Egestas purus viverra accumsan in nisl. Ut tellus elementum sagittis vitae. Proin libero nunc consequat interdum varius sit. Ultricies integer quis auctor elit sed vulputate. Fermentum posuere urna nec tincidunt. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Quisque sagittis purus sit amet volutpat. Ultrices tincidunt arcu non sodales neque sodales. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. Convallis posuere morbi leo urna molestie.</p>
+                  <ul>
+                    <li>Must be registered to view</li>
+                    <li>Section contains optional link to syllabi</li>
+                    <li>Favorite a section to add to your schedule</li>
+                  </ul>
+                </div>
+
+              </div>
+              <div className='col-sm-6 col-md-4'>
+                <div className='textHeading'>
+                  <h3>User Schedule</h3>
+                </div>
+                <div className='textPlace'>
+                  <ul>
+                    <li>View your schedule of "favorited" courses</li>
+                    <li>Review course syllabus</li>
+                    <li>Organized by class start time</li>
+                  </ul>
                 </div>
 
               </div>
