@@ -115,8 +115,6 @@ export default class Admin extends Component {
                         userID: this.state.userID,
                         section: delSection,
                     }
-
-                    console.log(userObj);
                     //Fire axios call and handle appropriately
                     axios.post(settings.scriptServer + "/csg_scripts/updateSchedule.php", userObj)
                         .then(result => {
