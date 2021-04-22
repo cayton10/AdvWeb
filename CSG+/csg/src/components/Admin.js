@@ -83,13 +83,49 @@ export default class Admin extends Component {
         })
     }
 
+    /**
+     * handleSectionRemove(event) - This method is sent down two children components
+     * in order to 1.) Update state array variable of user schedule and 2.) Add appropriate
+     * data to the database to persist changes.
+     * @param {onClick event} e 
+     * @returns updated state array and fires axios call
+     * 
+     * Lots of comments here because it took me a minute to figure out the architecture.
+     * If anyone looks at this in a repo or otherwise, let me know I'm a dummy and to remove
+     * all the comments in the function block
+     */
     handleSectionRemove(e) {
-        return(
-            this.setState({
-                section: e.target.value,
-            },
-                console.log(e.target.value)
-            )
+        //Bring in current schedule state
+        let schedule = this.state.userSchedule;
+        //Section to delete
+        let delSection = e.target.value;
+        //Use the copy from above to filter the course we deleted
+        //Store updated course schedule after deletion
+        let updated = schedule.filter(course => course.schedule_id != delSection);
+
+        //Return the updated state to re render and fire axios call to make permanent
+        return( 
+                this.setState({
+                    userSchedule: updated,
+                    section: delSection,
+                }, () => {
+
+                    //Create object to send to script
+                    let userObj = {
+                        userID: this.state.userID,
+                        section: delSection,
+                    }
+
+                    console.log(userObj);
+                    //Fire axios call and handle appropriately
+                    axios.post(settings.scriptServer + "/csg_scripts/updateSchedule.php", userObj)
+                        .then(result => {
+                            console.log(result)
+                        })
+                        .catch(error => {
+                            alert(error)
+                        }) 
+                })
         )
     }
 

@@ -3,6 +3,26 @@ import AdminTableRow from "./AdminTableRow";
 
 export default class AdminTable extends Component {
 
+    constructor(props) {
+        super(props)
+    }
+
+
+    /**
+     * printSchedule() iterates through schedule property sent 
+     * from parent and returns each course section as an independent
+     * component row
+     * @returns Component
+     */
+    printSechedule() {
+        const method = this.props.method;
+
+        return this.props.schedule.map(function(object, i) {
+            return <AdminTableRow key={i} section={object} method={method}/>
+        })
+    }
+
+
     render() {
 
         return(
@@ -21,10 +41,7 @@ export default class AdminTable extends Component {
                     <tbody>
                         {
                             this.props.schedule.length > 0 ?
-                            <AdminTableRow key={this.props.schedule.schedule_id} 
-                            schedule={this.props.schedule} 
-                            method={this.props.method} 
-                            />:
+                            this.printSechedule():
                             ""
                         }
                         {
